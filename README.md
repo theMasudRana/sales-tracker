@@ -1,2 +1,2 @@
-# sales-tracker
+# Sales Tracker
 WordPress sales tracker plugin
