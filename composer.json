@@ -1,0 +1,20 @@
+{
+    "name": "masud/sales-tracker",
+    "description": "WordPress plugin",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Masud Rana",
+            "email": "mr.masudrana00@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Sales\\Tracker\\": "includes/"
+        },
+        "files": []
+    }
+}
