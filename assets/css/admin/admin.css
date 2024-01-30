@@ -1,0 +1,53 @@
+.sale-tracker-form {
+	gap: 1.5rem;
+	max-width: min(100%, 660px);
+	background-color: #fff;
+	padding: 2rem;
+	border-radius: 0.5rem;
+	margin-inline: auto;
+
+	display: flex;
+	flex-direction: column;
+}
+
+@media (min-width: 768px) {
+	.sale-tracker-form {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+.st-form-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.st-form-item input,
+.st-form-item textarea {
+	border: 1px solid #e5e5e5;
+	padding: 4px 15px;
+}
+.st-form-item input:focus,
+.st-form-item textarea:focus {
+	border: 1px solid #2271b1;
+	box-shadow: none;
+}
+.st-form-item textarea {
+	padding: 8px 15px;
+}
+
+.st-form-item label {
+	font-weight: 600;
+	color: #000;
+}
+
+p.submit {
+	margin: 0;
+	padding: 0;
+	grid-column: span 2;
+}
+
+.st-item-full-width {
+	grid-column: span 2;
+}

@@ -97,19 +97,6 @@ if( ! class_exists( 'Sales_Tracker' ) ) {
             }
             update_option('sales_tracker_version', SALES_TRACKER_VERSION );
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
 
