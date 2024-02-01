@@ -83,19 +83,14 @@ if( ! class_exists( 'Sales_Tracker' ) ) {
             }
         }
 
-
         /**
          * Track installation time and installed version when installed
          * 
          * @return void
          */
         public function activate() {
-            $installed = get_option( 'sales_tracker_installed' );
-
-            if( ! $installed ) {
-                update_option( 'sales_tracker_installed', time() );
-            }
-            update_option('sales_tracker_version', SALES_TRACKER_VERSION );
+            $installer = new \Sales\Tracker\Installer();
+            $installer->run();
         }
     }
 }
@@ -111,7 +106,6 @@ if( ! function_exists( 'sales_tracker' ) ) {
      * 
      * @return \Sales_Tracker
      */
-    
     function sales_tracker() {
         return Sales_Tracker::init();
     }

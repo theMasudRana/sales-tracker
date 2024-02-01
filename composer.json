@@ -15,6 +15,6 @@
         "psr-4": {
             "Sales\\Tracker\\": "includes/"
         },
-        "files": []
+        "files": [ "includes/functions.php" ]
     }
 }
