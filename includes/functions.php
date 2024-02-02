@@ -51,3 +51,46 @@ function st_insert_track( $args = [] ) {
 
     return $wpdb->inserted_id;
 }
+
+/**
+ * Get All the tracks
+ * 
+ * @return array
+ */
+function st_get_tracks( $args = [] ) {
+    global $wpdb;
+
+    $defaults = [
+        'number'  => 20,
+        'offset'   => 0,
+        'orderby' => 'id',
+        'order'    => 'ASC'
+    ];
+
+    $args = wp_parse_args( $args, $defaults );
+
+    $args['number'] = absint( $args['number'] );
+    $args['offset'] = absint( $args['offset'] );
+
+    $sql = $wpdb->prepare(
+        "SELECT * FROM {$wpdb->prefix}sales_tracker_tracks
+        ORDER BY {$args['orderby']} {$args['order']}
+        LIMIT %d, %d",
+        $args['offset'], $args['number']
+    );
+
+    $items = $wpdb->get_results( $sql );
+
+    return $items;
+}
+
+/**
+ * Numbers of tracks saved in the database.
+ * 
+ * @return int
+ */
+function st_tracks_count() {
+    global $wpdb;
+
+    return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}sales_tracker_tracks");
+}
