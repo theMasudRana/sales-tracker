@@ -3,9 +3,9 @@
 namespace Sales\Tracker\Admin;
 
 /**
- * Tracker handler class
+ * Sale handler class
  */
-class Tracker {
+class Sales {
 
     /**
      * Store error messages
@@ -17,14 +17,14 @@ class Tracker {
      * 
      * @return string
      */
-    public function tracker_page() {
+    public function sales_tracker_page() {
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
     
         $templates = [
-            'new'  => __DIR__ . '/views/track-new.php',
-            'edit' => __DIR__ . '/views/track-edit.php',
-            'view' => __DIR__ . '/views/track-view.php',
-            'list' => __DIR__ . '/views/track-list.php',
+            'new'  => __DIR__ . '/views/sale-new.php',
+            'edit' => __DIR__ . '/views/sale-edit.php',
+            'view' => __DIR__ . '/views/sale-view.php',
+            'list' => __DIR__ . '/views/sale-list.php',
         ];
     
         $template = isset( $templates[$action] ) ? $templates[$action] : $templates['list'];

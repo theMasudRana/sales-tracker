@@ -9,7 +9,7 @@ if ( ! class_exists( 'WP_List_table' ) ) {
 /**
  * Display Track List
  */
-class Track_list extends \WP_List_Table {
+class Sales_List extends \WP_List_Table {
 
     /**
      * Call parent construct for args

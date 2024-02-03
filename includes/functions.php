@@ -94,3 +94,4 @@ function st_tracks_count() {
 
     return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}sales_tracker_tracks");
 }
+
