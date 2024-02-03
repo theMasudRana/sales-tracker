@@ -28,7 +28,7 @@ class Sales_List extends \WP_List_Table {
      * @return void
      */
     function no_items() {
-        esc_html_e( 'No address found', 'sales-tracker' );
+        esc_html_e( 'No sales data found', 'sales-tracker' );
     }
 
     /**
@@ -150,10 +150,16 @@ class Sales_List extends \WP_List_Table {
             $args['order']   = $_REQUEST['order'] ;
         }
 
-        $this->items = st_get_tracks( $args );
+        $this->items = st_get_sales( $args );
+
+        $user_search_key = isset( $_REQUEST['s'] ) ? wp_unslash( trim( $_REQUEST['s'] ) ): '';
+
+        if( $user_search_key ) {
+            $this->items = st_filter_sales( $this->items, $user_search_key );
+        }
 
         $this->set_pagination_args( [
-            'total_items'   => st_tracks_count(),
+            'total_items'   => st_sales_count(),
             'per_page'      => $per_page,
         ] );
     }

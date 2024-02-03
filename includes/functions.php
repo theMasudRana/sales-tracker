@@ -57,7 +57,7 @@ function st_insert_track( $args = [] ) {
  * 
  * @return array
  */
-function st_get_tracks( $args = [] ) {
+function st_get_sales( $args = [] ) {
     global $wpdb;
 
     $defaults = [
@@ -89,9 +89,28 @@ function st_get_tracks( $args = [] ) {
  * 
  * @return int
  */
-function st_tracks_count() {
+function st_sales_count() {
     global $wpdb;
 
     return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}sales_tracker_tracks");
 }
 
+/**
+ * Filters table data based on a search key.
+ *
+ * @param array $table_data The table data to filter.
+ * @param string $search_key The search key to filter by.
+ *
+ * @return array The filtered table data.
+ */
+function st_filter_sales( $table_data, $search_key ) {
+    $filtered_table_data = array_values( array_filter( $table_data, function( $row ) use( $search_key ) {
+        foreach( $row as $row_val ) {
+            if( stripos( $row_val, $search_key ) !== false ) {
+                return true;
+            }
+        }
+    } ) );
+
+    return $filtered_table_data;
+}
