@@ -114,3 +114,33 @@ function st_filter_sales( $table_data, $search_key ) {
 
     return $filtered_table_data;
 }
+
+/**
+ * Get single sale item
+ * 
+ * @return object
+ */
+function st_get_sale( $id ) {
+    global $wpdb;
+
+    $sale_item =  $wpdb->get_row(
+        $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sales_tracker_tracks WHERE id = %d", $id )
+    );
+
+    return $sale_item;
+}
+
+/**
+ * Delate sale item
+ * 
+ * @return int|boolean
+ */
+function st_delete_sale( $id ) {
+    global $wpdb;
+
+    return $wpdb->delete(
+        $wpdb->prefix . 'sales_tracker_tracks',
+        [ 'id' => $id ],
+        [ '%d' ]
+    );
+}

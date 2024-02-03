@@ -1,16 +1,14 @@
 <?php
 
 namespace Sales\Tracker\Admin;
+use Sales\Tracker\Traits\Form_Errors;
 
 /**
  * Sale handler class
  */
 class Sales {
 
-    /**
-     * Store error messages
-     */
-    public $errors = [];
+    use Form_Errors;
 
     /**
      * Sales tracker page routing

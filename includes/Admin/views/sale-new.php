@@ -1,20 +1,21 @@
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php esc_html_e( 'New Sale', 'sales-tracker' ); ?></h1>
     <a href="<?php echo admin_url( 'admin.php?page=sales-tracker'); ?>" class="page-title-action"><?php esc_html_e('View All Sales', 'sales-tracker')?></a>
-    <?php
-        echo '<pre>';
-        var_dump($this->errors);
-        echo '</pre>';
-    ?>
     <form action="" method="post">
         <div class="sale-tracker-form">
             <div class="st-form-item">
                 <label for="amount"><?php esc_html_e( 'Amount', 'sales-tracker' )?></label>
                 <input type="number" name="amount" id="amount" placeholder="<?php esc_attr_e( 'Amount', 'sales-tracker' ); ?>" value="">
+                <?php if( $this->has_error( 'amount' ) ) : ?>
+                    <p class="message error"><?php echo esc_html( $this->get_error( 'amount' ) ); ?></p>
+                <?php endif; ?>
             </div>
             <div class="st-form-item">
                 <label for="buyer"><?php esc_html_e( 'Buyer', 'sales-tracker' )?></label>
                 <input type="text" name="buyer" id="buyer" placeholder="<?php esc_attr_e( 'Enter buyer name', 'sales-tracker' ); ?>" value="">
+                <?php if( $this->has_error( 'buyer' ) ) : ?>
+                    <p class="message error"><?php echo esc_html( $this->get_error( 'buyer' ) ); ?></p>
+                <?php endif; ?>
             </div>
             <div class="st-form-item st-item-full-width">
                 <label for="receipt-id"><?php esc_html_e( 'Receipt ID', 'sales-tracker' )?></label>
@@ -28,6 +29,9 @@
             <div class="st-form-item">
                 <label for="buyer-email"><?php esc_html_e( 'Buyer Email', 'sales-tracker' )?></label>
                 <input type="email" name="buyer_email" id="buyer-email" placeholder="<?php esc_attr_e( 'Enter buyer email', 'sales-tracker' ); ?>" value="">
+                <?php if( $this->has_error( 'buyer_email' ) ) : ?>
+                    <p class="message error"><?php echo esc_html( $this->get_error( 'buyer_email' ) ); ?></p>
+                <?php endif; ?>
             </div>
             <div class="st-form-item">
                 <label for="city"><?php esc_html_e( 'City', 'sales-tracker' )?></label>
@@ -48,6 +52,5 @@
             <?php wp_nonce_field( 'new-tracker-item' ); ?>
             <?php submit_button( esc_html__( 'Add Sale', 'sales-tracker' ), 'primary', 'add_tracker_item' ); ?>
         </div>
-
     </form>
 </div>

@@ -51,3 +51,14 @@ p.submit {
 .st-item-full-width {
 	grid-column: span 2;
 }
+
+.st-form-item .message {
+	margin: 0;
+}
+.st-form-item:has(.error) {
+	color: red;
+}
+
+.st-form-item:has(.error) input {
+	border-color: red;
+}
