@@ -6,13 +6,19 @@ if ( ! class_exists( 'WP_List_table' ) ) {
     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
+/**
+ * Display Track List
+ */
 class Track_list extends \WP_List_Table {
 
+    /**
+     * Call parent construct for args
+     */
     function __construct() {
         parent::__construct( [
             'singular'  => 'track',
             'plural'    => 'tracks',
-            'ajax'      => true
+            'ajax'      => false
         ] );
     }
 
@@ -26,7 +32,7 @@ class Track_list extends \WP_List_Table {
     }
 
     /**
-     * Get the column names
+     * Get table columns
      * 
      * @return array
      */
@@ -50,8 +56,8 @@ class Track_list extends \WP_List_Table {
     function get_sortable_columns() {
         $sortable_columns = [
             'buyer'       => [ 'buyer', true ],
-            'entry_at'    => [ 'entry_at', true ],
             'amount'      => [ 'amount', true ],
+            'entry_at'    => [ 'entry_at', true ],
             'buyer_email' => [ 'buyer_email', true ],
         ];
 
@@ -124,12 +130,13 @@ class Track_list extends \WP_List_Table {
      * @return void
      */
     public function prepare_items() {
-        $column                = $this->get_columns();
-        $hidden                = [];
-        $sortable              = $this->get_sortable_columns();
+        $column   = $this->get_columns();
+        $hidden   = [];
+        $sortable = $this->get_sortable_columns();
+
         $this->_column_headers = [ $column, $hidden, $sortable ];
 
-        $per_page     = 20;
+        $per_page     = 4;
         $current_page = $this->get_pagenum();
         $offset       = ( $current_page - 1 ) * $per_page;
 
@@ -143,11 +150,11 @@ class Track_list extends \WP_List_Table {
             $args['order']   = $_REQUEST['order'] ;
         }
 
-        $this->items           = st_get_tracks( $args );
+        $this->items = st_get_tracks( $args );
 
         $this->set_pagination_args( [
             'total_items'   => st_tracks_count(),
-            'par_page'      => $per_page,
+            'per_page'      => $per_page,
         ] );
     }
 }

@@ -8,9 +8,10 @@ namespace Sales\Tracker;
 class Admin {
     
     function __construct() {
-        new Admin\Menu();
+        $tracker = new Admin\Tracker();
+        new Admin\Menu( $tracker );
         add_action( 'admin_enqueue_scripts', [$this, 'admin_enqueue' ] );
-        $this->dispatch_actions();
+        $this->dispatch_actions( $tracker );
     }
 
     /**
@@ -25,8 +26,7 @@ class Admin {
     /**
      * Dispatch form actions
      */
-    public function dispatch_actions() {
-        $tracker = new Admin\Tracker();
+    public function dispatch_actions( $tracker ) {
         add_action( 'admin_init', [$tracker, 'form_handler'] );
     }
 }

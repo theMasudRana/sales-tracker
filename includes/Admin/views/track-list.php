@@ -5,6 +5,7 @@
         <?php
             $table = new Sales\Tracker\Admin\Track_list();
             $table->prepare_items();
+            $table->search_box( 'search', 'search_id' );
             $table->display();
         ?>
     </form>
