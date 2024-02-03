@@ -17,6 +17,7 @@ class Sales {
      */
     public function sales_tracker_page() {
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
+        $id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
     
         $templates = [
             'new'  => __DIR__ . '/views/sale-new.php',
@@ -26,6 +27,11 @@ class Sales {
         ];
     
         $template = isset( $templates[$action] ) ? $templates[$action] : $templates['list'];
+
+        $sale_item = null;
+        if ($action === 'edit' || $action === 'view') {
+            $sale_item = st_get_sale($id);
+        }
     
         if ( file_exists( $template ) ) {
             include $template;
@@ -51,6 +57,7 @@ class Sales {
             wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
         }
 
+        $id          = isset( $_POST['id'] ) ? intval( $_POST['id'] )                             : 0;
         $amount      = isset( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] )        : '';
         $buyer       = isset( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] )          : '';
         $receipt_id  = isset( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ): '';
@@ -77,7 +84,7 @@ class Sales {
             return ;
         }
 
-        $insert_id = st_insert_track( [
+        $args = [
             'amount'      => $amount,
             'buyer'       => $buyer,
             'receipt_id'  => $receipt_id,
@@ -87,13 +94,26 @@ class Sales {
             'city'        => $city,
             'phone'       => $phone,
             'entry_by'    => $entry_by,
-        ] );
+        ];
+
+        if( $id ) {
+            $args['id'] = $id;
+        }
+
+        $insert_id = st_insert_track( $args );
+
+
 
         if ( is_wp_error( $insert_id ) ) {
             wp_die( $insert_id->get_error_message() );
         }
 
-        $redirect_to = admin_url( 'admin.php?page=sales-tracker&inserted=true' );
+        if( $id ) {
+            $redirect_to = admin_url( 'admin.php?page=sales-tracker&action=edit&sale-updated=true&id=' . $id );
+        } else {
+            $redirect_to = admin_url( 'admin.php?page=sales-tracker&inserted=true' );
+        }
+
         wp_redirect( $redirect_to );
 
         exit;

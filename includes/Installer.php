@@ -39,7 +39,7 @@ class Installer {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
 
-        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}sales_tracker_tracks` (
+        $schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}sales_tracker_sales` (
             `id` bigint NOT NULL AUTO_INCREMENT,
             `amount` int NOT NULL,
             `buyer` varchar(255) NOT NULL,
