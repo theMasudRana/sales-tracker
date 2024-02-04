@@ -55,10 +55,8 @@ class Sales_List extends \WP_List_Table {
      */
     function get_sortable_columns() {
         $sortable_columns = [
-            'buyer'       => [ 'buyer', true ],
             'amount'      => [ 'amount', true ],
             'entry_at'    => [ 'entry_at', true ],
-            'buyer_email' => [ 'buyer_email', true ],
         ];
 
         return $sortable_columns;
@@ -103,13 +101,14 @@ class Sales_List extends \WP_List_Table {
      */
     public function column_buyer( $item ) {
         $actions           = [];
-        $actions['edit']   = sprintf( '<a href = "%s" title = "%s">%s</a>', admin_url( 'admin.php?page=sales-tracker&action=edit&id=' . $item->id ), $item->id, __( 'Edit', 'sales-tracker' ), __( 'Edit', 'sales-tracker' ) );
-        $actions['delete'] = sprintf( '<a href="%s" class="st-delete-item" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=sales-tracker-delete-item&id=' . $item->id ), 'sales-tracker-delete-item' ), $item->id, __( 'Delete', 'sales-tracker' ), __( 'Delete', 'sales-tracker' ) );
+        $actions['edit']   = sprintf( '<a href = "%s" title = "%s">%s</a>', admin_url( 'admin.php?page=sales-tracker&action=edit&id=' . $item->id ), $item->id, esc_html__( 'Edit', 'sales-tracker' ), esc_html__( 'Edit', 'sales-tracker' ) );
+        $actions['delete'] = sprintf( '<a href="%s" class="st-delete-link" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=st_delete_sale&id=' . $item->id ), 'st_delete_sale' ), $item->id, esc_html__( 'Delete', 'sales-tracker' ), esc_html__( 'Delete', 'sales-tracker' ) );
 
         return sprintf( 
             '<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url( 'admin.php?page=sales-tracker&action=view&id=' . $item->id ), $item->buyer, $this->row_actions( $actions )
         );
     }
+    
 
     /**
      * Add the checkbox inside each item
@@ -136,7 +135,7 @@ class Sales_List extends \WP_List_Table {
 
         $this->_column_headers = [ $column, $hidden, $sortable ];
 
-        $per_page     = 4;
+        $per_page     = 10;
         $current_page = $this->get_pagenum();
         $offset       = ( $current_page - 1 ) * $per_page;
 

@@ -118,4 +118,23 @@ class Sales {
 
         exit;
     }
+
+    /**
+     * Delete single sale
+     */
+    public function delete_sale() {
+        if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'st_delete_sale' ) || ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'You are not authorized delete this item.', 'sales-tracker' ) );
+        }
+
+        $id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ): 0;
+
+        if ( st_delete_sale( $id ) ) {
+            $redirect_to = admin_url( 'admin.php?page=sales-tracker&sale-deleted=true' );
+        } else {
+            $redirect_to = admin_url( 'admin.php?page=sales-tracker&sale-deleted=false' );
+        }
+        wp_redirect( $redirect_to );
+        exit;
+    }
 }

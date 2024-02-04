@@ -6,6 +6,11 @@
            <p><?php esc_html_e( 'Sale item has been inserted successfully!', 'sales-tracker' ); ?></p>
         </div>
     <?php endif; ?>
+    <?php if ( isset( $_GET['sale-deleted'] ) && $_GET['sale-deleted'] == 'true' ) : ?>
+        <div class="notice notice-success">
+           <p><?php esc_html_e( 'Sale item has been deleted successfully!', 'sales-tracker' ); ?></p>
+        </div>
+    <?php endif; ?>
     <form action="" method="post">
         <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
         <?php

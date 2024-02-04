@@ -96,7 +96,7 @@ function st_get_sales( $args = [] ) {
         'number'  => 20,
         'offset'   => 0,
         'orderby' => 'id',
-        'order'    => 'ASC'
+        'order'    => 'DESC'
     ];
 
     $args = wp_parse_args( $args, $defaults );
