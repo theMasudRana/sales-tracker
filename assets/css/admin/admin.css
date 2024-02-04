@@ -1,4 +1,5 @@
-.sale-tracker-form {
+.sale-tracker-form,
+.single-sale-item {
 	gap: 1.5rem;
 	max-width: min(100%, 660px);
 	background-color: #fff;
@@ -12,7 +13,8 @@
 }
 
 @media (min-width: 768px) {
-	.sale-tracker-form {
+	.sale-tracker-form,
+	.single-sale-item {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -62,4 +64,17 @@ p.submit {
 
 .st-form-item:has(.error) input {
 	border-color: red;
+}
+
+.st-sale-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid #e1e1e1;
+	padding: 0 1rem;
+	border-radius: 4px;
+}
+
+.st-sale-item p:first-child {
+	font-weight: 600;
 }
