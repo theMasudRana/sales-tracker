@@ -14,4 +14,5 @@ return array(
     'Sales\\Tracker\\Frontend' => $baseDir . '/includes/Frontend.php',
     'Sales\\Tracker\\Frontend\\Shortcode' => $baseDir . '/includes/Frontend/Shortcode.php',
     'Sales\\Tracker\\Installer' => $baseDir . '/includes/Installer.php',
+    'Sales\\Tracker\\Traits\\Form_Errors' => $baseDir . '/includes/Traits/Form_Errors.php',
 );

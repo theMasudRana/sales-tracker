@@ -7,22 +7,22 @@ namespace Sales\Tracker\Frontend;
  */
 class Shortcode {
 
-    /**
-     * Initializes the class
-     */
-    function __construct() {
-        add_shortcode( 'sales-tracker', [ $this, 'render_shortcode' ] );
-    }
+	/**
+	 * Initializes the class
+	 */
+	function __construct() {
+		add_shortcode( 'sales-tracker', array( $this, 'render_shortcode' ) );
+	}
 
-    /**
-     * Shortcode handler callback
-     * 
-     * @param array $atts
-     * @param string $content 
-     * 
-     * @return string
-     */
-    public function render_shortcode( $atts, $content = '' ) {
-        return 'Hello From Shortcode';
-    }
+	/**
+	 * Shortcode handler callback
+	 *
+	 * @param array $atts
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	public function render_shortcode( $atts, $content = '' ) {
+		return 'Hello From Shortcode';
+	}
 }

@@ -8,133 +8,131 @@ use Sales\Tracker\Traits\Form_Errors;
  */
 class Sales {
 
-    use Form_Errors;
+	use Form_Errors;
 
-    /**
-     * Sales tracker page routing
-     * 
-     * @return string
-     */
-    public function sales_tracker_page() {
-        $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
-        $id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
-    
-        $templates = [
-            'new'  => __DIR__ . '/views/sale-new.php',
-            'edit' => __DIR__ . '/views/sale-edit.php',
-            'view' => __DIR__ . '/views/sale-view.php',
-            'list' => __DIR__ . '/views/sale-list.php',
-        ];
-    
-        $template = isset( $templates[$action] ) ? $templates[$action] : $templates['list'];
+	/**
+	 * Sales tracker page routing
+	 *
+	 * @return string
+	 */
+	public function sales_tracker_page() {
+		$action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
+		$id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
 
-        $sale_item = null;
-        if ($action === 'edit' || $action === 'view') {
-            $sale_item = st_get_sale($id);
-        }
-    
-        if ( file_exists( $template ) ) {
-            include $template;
-        }
-    }
+		$templates = array(
+			'new'  => __DIR__ . '/views/sale-new.php',
+			'edit' => __DIR__ . '/views/sale-edit.php',
+			'view' => __DIR__ . '/views/sale-view.php',
+			'list' => __DIR__ . '/views/sale-list.php',
+		);
 
-    /**
-     * New sales item form handler
-     * 
-     * @return bool|WP_Error True on success, WP_Error on failure.
-     */
-    public function form_handler() {
+		$template = isset( $templates[ $action ] ) ? $templates[ $action ] : $templates['list'];
 
-        if ( ! isset( $_POST['add_tracker_item'] ) ) {
-            return;
-        }
+		$sale_item = null;
+		if ( $action === 'edit' || $action === 'view' ) {
+			$sale_item = st_get_sale( $id );
+		}
 
-        if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'new-tracker-item' ) ) {
-            wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
-        }
+		if ( file_exists( $template ) ) {
+			include $template;
+		}
+	}
 
-        if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
-        }
+	/**
+	 * New sales item form handler
+	 *
+	 * @return bool|WP_Error True on success, WP_Error on failure.
+	 */
+	public function form_handler() {
 
-        $id          = isset( $_POST['id'] ) ? intval( $_POST['id'] )                             : 0;
-        $amount      = isset( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] )        : '';
-        $buyer       = isset( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] )          : '';
-        $receipt_id  = isset( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ): '';
-        $items       = isset( $_POST['items'] ) ? sanitize_text_field( $_POST['items'] )          : '';
-        $buyer_email = isset( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] )   : '';
-        $note        = isset( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] )        : '';
-        $city        = isset( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] )            : '';
-        $phone       = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] )          : '';
-        $entry_by    = isset( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] )    : '';
+		if ( ! isset( $_POST['add_tracker_item'] ) ) {
+			return;
+		}
 
-        if ( empty( $amount ) ) {
-            $this->errors['amount'] = esc_html__( 'Please enter amount.', 'sales-tracker' );
-        }
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'new-tracker-item' ) ) {
+			wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
+		}
 
-        if ( empty( $buyer ) ) {
-            $this->errors['buyer'] = esc_html__( 'Please enter buyer name.', 'sales-tracker' );
-        }
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
+		}
 
-        if ( empty( $buyer_email ) ) {
-            $this->errors['buyer_email'] = esc_html__( 'Please enter buyer email.', 'sales-tracker' );
-        }
+		$id          = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
+		$amount      = isset( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] ) : '';
+		$buyer       = isset( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] ) : '';
+		$receipt_id  = isset( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ) : '';
+		$items       = isset( $_POST['items'] ) ? sanitize_text_field( $_POST['items'] ) : '';
+		$buyer_email = isset( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] ) : '';
+		$note        = isset( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] ) : '';
+		$city        = isset( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] ) : '';
+		$phone       = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
+		$entry_by    = isset( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] ) : '';
 
-        if ( ! empty( $this->errors ) ) {
-            return ;
-        }
+		if ( empty( $amount ) ) {
+			$this->errors['amount'] = esc_html__( 'Please enter amount.', 'sales-tracker' );
+		}
 
-        $args = [
-            'amount'      => $amount,
-            'buyer'       => $buyer,
-            'receipt_id'  => $receipt_id,
-            'items'       => $items,
-            'buyer_email' => $buyer_email,
-            'note'        => $note,
-            'city'        => $city,
-            'phone'       => $phone,
-            'entry_by'    => $entry_by,
-        ];
+		if ( empty( $buyer ) ) {
+			$this->errors['buyer'] = esc_html__( 'Please enter buyer name.', 'sales-tracker' );
+		}
 
-        if( $id ) {
-            $args['id'] = $id;
-        }
+		if ( empty( $buyer_email ) ) {
+			$this->errors['buyer_email'] = esc_html__( 'Please enter buyer email.', 'sales-tracker' );
+		}
 
-        $insert_id = st_insert_track( $args );
+		if ( ! empty( $this->errors ) ) {
+			return;
+		}
 
+		$args = array(
+			'amount'      => $amount,
+			'buyer'       => $buyer,
+			'receipt_id'  => $receipt_id,
+			'items'       => $items,
+			'buyer_email' => $buyer_email,
+			'note'        => $note,
+			'city'        => $city,
+			'phone'       => $phone,
+			'entry_by'    => $entry_by,
+		);
 
+		if ( $id ) {
+			$args['id'] = $id;
+		}
 
-        if ( is_wp_error( $insert_id ) ) {
-            wp_die( $insert_id->get_error_message() );
-        }
+		$insert_id = st_insert_track( $args );
 
-        if( $id ) {
-            $redirect_to = admin_url( 'admin.php?page=sales-tracker&action=edit&sale-updated=true&id=' . $id );
-        } else {
-            $redirect_to = admin_url( 'admin.php?page=sales-tracker&inserted=true' );
-        }
+		if ( is_wp_error( $insert_id ) ) {
+			wp_die( $insert_id->get_error_message() );
+		}
 
-        wp_redirect( $redirect_to );
+		if ( $id ) {
+			$redirect_to = admin_url( 'admin.php?page=sales-tracker&action=edit&sale-updated=true&id=' . $id );
+		} else {
+			$redirect_to = admin_url( 'admin.php?page=sales-tracker&inserted=true' );
+		}
 
-        exit;
-    }
+		wp_redirect( $redirect_to );
 
-    /**
-     * Delete single sale
-     */
-    public function delete_sale() {
-        if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'st_delete_sale' ) || ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You are not authorized delete this item.', 'sales-tracker' ) );
-        }
+		exit;
+	}
 
-        $id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ): 0;
+	/**
+	 * Delete single sale
+	 */
+	public function delete_sale() {
+		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'st_delete_sale' ) || ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You are not authorized delete this item.', 'sales-tracker' ) );
+		}
 
-        if ( st_delete_sale( $id ) ) {
-            $redirect_to = admin_url( 'admin.php?page=sales-tracker&sale-deleted=true' );
-        } else {
-            $redirect_to = admin_url( 'admin.php?page=sales-tracker&sale-deleted=false' );
-        }
-        wp_redirect( $redirect_to );
-        exit;
-    }
+		$id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
+
+		if ( st_delete_sale( $id ) ) {
+			$redirect_to = admin_url( 'admin.php?page=sales-tracker&sale-deleted=true' );
+		} else {
+			$redirect_to = admin_url( 'admin.php?page=sales-tracker&sale-deleted=false' );
+		}
+		wp_redirect( $redirect_to );
+		exit;
+	}
 }

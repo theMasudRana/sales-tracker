@@ -1,0 +1,230 @@
+# Copyright (C) 2024 Masud Rana
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sales Tracker 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sales-tracker\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-02-04T18:59:47+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0-alpha\n"
+"X-Domain: sales-tracker\n"
+
+#. Plugin Name of the plugin
+#: C:\laragon\www\sales-tracker\wp-content\plugins\sales-tracker\sales-tracker.php
+#: includes/Admin/Menu.php:30
+msgid "Sales Tracker"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: C:\laragon\www\sales-tracker\wp-content\plugins\sales-tracker\sales-tracker.php
+msgid "https://github.com/theMasudRana/sales-tracker"
+msgstr ""
+
+#. Description of the plugin
+#: C:\laragon\www\sales-tracker\wp-content\plugins\sales-tracker\sales-tracker.php
+msgid "This plugin will track your sales"
+msgstr ""
+
+#. Author of the plugin
+#: C:\laragon\www\sales-tracker\wp-content\plugins\sales-tracker\sales-tracker.php
+msgid "Masud Rana"
+msgstr ""
+
+#. Author URI of the plugin
+#: C:\laragon\www\sales-tracker\wp-content\plugins\sales-tracker\sales-tracker.php
+msgid "https://masudrana.me/"
+msgstr ""
+
+#: includes/Admin/Menu.php:31
+msgid "All Sales"
+msgstr ""
+
+#: includes/Admin/Menu.php:32
+#: includes/Admin/views/sale-list.php:3
+msgid "Add New Sale"
+msgstr ""
+
+#: includes/Admin/Menu.php:33
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin/Sales.php:53
+#: includes/Admin/Sales.php:57
+msgid "You are not authorized to submit this form."
+msgstr ""
+
+#: includes/Admin/Sales.php:72
+msgid "Please enter amount."
+msgstr ""
+
+#: includes/Admin/Sales.php:76
+msgid "Please enter buyer name."
+msgstr ""
+
+#: includes/Admin/Sales.php:80
+msgid "Please enter buyer email."
+msgstr ""
+
+#: includes/Admin/Sales.php:127
+msgid "You are not authorized delete this item."
+msgstr ""
+
+#: includes/Admin/Sales_List.php:31
+msgid "No sales data found"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:42
+#: includes/Admin/views/sale-edit.php:18
+#: includes/Admin/views/sale-new.php:14
+msgid "Buyer"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:43
+msgid "Email"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:44
+#: includes/Admin/views/sale-edit.php:45
+#: includes/Admin/views/sale-new.php:41
+msgid "Phone"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:45
+#: includes/Admin/views/sale-edit.php:11
+#: includes/Admin/views/sale-edit.php:12
+#: includes/Admin/views/sale-new.php:7
+#: includes/Admin/views/sale-new.php:8
+msgid "Amount"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:46
+msgid "Date"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:47
+#: includes/Admin/views/sale-edit.php:29
+#: includes/Admin/views/sale-new.php:25
+msgid "Items"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:72
+msgid "Move to Trash"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:104
+msgid "Edit"
+msgstr ""
+
+#: includes/Admin/Sales_List.php:105
+msgid "Delete"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:2
+msgid "Edit Sale"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:5
+msgid "Sale has been updated successfully!"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:19
+#: includes/Admin/views/sale-new.php:15
+msgid "Enter buyer name"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:25
+#: includes/Admin/views/sale-new.php:21
+msgid "Receipt ID"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:26
+#: includes/Admin/views/sale-new.php:22
+msgid "Enter receipt ID"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:30
+#: includes/Admin/views/sale-new.php:26
+msgid "Purchased Items"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:34
+#: includes/Admin/views/sale-new.php:30
+msgid "Buyer Email"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:35
+#: includes/Admin/views/sale-new.php:31
+msgid "Enter buyer email"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:41
+#: includes/Admin/views/sale-new.php:37
+msgid "City"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:42
+#: includes/Admin/views/sale-new.php:38
+msgid "Enter city name"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:46
+#: includes/Admin/views/sale-new.php:42
+msgid "Enter phone number"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:49
+#: includes/Admin/views/sale-new.php:45
+msgid "Entry By"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:50
+#: includes/Admin/views/sale-new.php:46
+msgid "Staff ID"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:53
+#: includes/Admin/views/sale-new.php:49
+msgid "Note"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:54
+#: includes/Admin/views/sale-new.php:50
+msgid "Enter note"
+msgstr ""
+
+#: includes/Admin/views/sale-edit.php:58
+msgid "Update Sale"
+msgstr ""
+
+#: includes/Admin/views/sale-list.php:2
+msgid "Sales"
+msgstr ""
+
+#: includes/Admin/views/sale-list.php:6
+msgid "Sale item has been inserted successfully!"
+msgstr ""
+
+#: includes/Admin/views/sale-list.php:11
+msgid "Sale item has been deleted successfully!"
+msgstr ""
+
+#: includes/Admin/views/sale-new.php:2
+msgid "New Sale"
+msgstr ""
+
+#: includes/Admin/views/sale-new.php:3
+msgid "View All Sales"
+msgstr ""
+
+#: includes/Admin/views/sale-new.php:53
+msgid "Add Sale"
+msgstr ""
+
+#: includes/functions.php:79
+msgid "Failed to insert data."
+msgstr ""

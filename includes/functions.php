@@ -2,129 +2,129 @@
 
 /**
  * Insert track item in to the database
- * 
+ *
  * @param array $args
- * 
+ *
  * @return int|WP_Error
  */
-function st_insert_track( $args = [] ) {
-    global $wpdb;
+function st_insert_track( $args = array() ) {
+	global $wpdb;
 
-    $defaults = [
-        'amount'      => '',
-        'buyer'       => '',
-        'receipt_id'  => '',
-        'items'       => '',
-        'buyer_email' => '',
-        'buyer_ip'    => $_SERVER['REMOTE_ADDR'],
-        'note'        => '',
-        'city'        => '',
-        'phone'       => '',
-        'hash_key'    => '',
-        'entry_at'    => current_time( 'mysql' ),
-        'entry_by'    => get_current_user_id(),
-    ];
+	$defaults = array(
+		'amount'      => '',
+		'buyer'       => '',
+		'receipt_id'  => '',
+		'items'       => '',
+		'buyer_email' => '',
+		'buyer_ip'    => $_SERVER['REMOTE_ADDR'],
+		'note'        => '',
+		'city'        => '',
+		'phone'       => '',
+		'hash_key'    => '',
+		'entry_at'    => current_time( 'mysql' ),
+		'entry_by'    => get_current_user_id(),
+	);
 
-    $data     = wp_parse_args( $args, $defaults );
+	$data = wp_parse_args( $args, $defaults );
 
-    if ( isset( $data['id'] ) ) {
+	if ( isset( $data['id'] ) ) {
 
-        $id = $data['id'];
-        unset( $data['id'] );
+		$id = $data['id'];
+		unset( $data['id'] );
 
-        $updated = $wpdb->update(
-            "{$wpdb->prefix}sales_tracker_sales",
-            $data,
-            [ 'id' => $id ],
-            [
-                '%d',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-            ],
-            [ '%d' ]
-        );
+		$updated = $wpdb->update(
+			"{$wpdb->prefix}sales_tracker_sales",
+			$data,
+			array( 'id' => $id ),
+			array(
+				'%d',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%d',
+			),
+			array( '%d' )
+		);
 
-        return $updated;
+		return $updated;
 
-    } else {
-        $inserted = $wpdb->insert( 
-            "{$wpdb->prefix}sales_tracker_sales",
-            $data,
-            [
-                '%d',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-            ]
-        );
-    
-        if( ! $inserted ) {
-            return new \WP_Error( 'failed-to-insert', esc_html__( 'Failed to insert data.', 'sales-tracker' ) );
-        }
+	} else {
+		$inserted = $wpdb->insert(
+			"{$wpdb->prefix}sales_tracker_sales",
+			$data,
+			array(
+				'%d',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%d',
+			)
+		);
 
-        return $wpdb->inserted_id;
-    }
+		if ( ! $inserted ) {
+			return new \WP_Error( 'failed-to-insert', esc_html__( 'Failed to insert data.', 'sales-tracker' ) );
+		}
 
+		return $wpdb->inserted_id;
+	}
 }
 
 /**
  * Get All the tracks
- * 
+ *
  * @return array
  */
-function st_get_sales( $args = [] ) {
-    global $wpdb;
+function st_get_sales( $args = array() ) {
+	global $wpdb;
 
-    $defaults = [
-        'number'  => 20,
-        'offset'   => 0,
-        'orderby' => 'id',
-        'order'    => 'DESC'
-    ];
+	$defaults = array(
+		'number'  => 20,
+		'offset'  => 0,
+		'orderby' => 'id',
+		'order'   => 'DESC',
+	);
 
-    $args = wp_parse_args( $args, $defaults );
+	$args = wp_parse_args( $args, $defaults );
 
-    $args['number'] = absint( $args['number'] );
-    $args['offset'] = absint( $args['offset'] );
+	$args['number'] = absint( $args['number'] );
+	$args['offset'] = absint( $args['offset'] );
 
-    $sql = $wpdb->prepare(
-        "SELECT * FROM {$wpdb->prefix}sales_tracker_sales
+	$sql = $wpdb->prepare(
+		"SELECT * FROM {$wpdb->prefix}sales_tracker_sales
         ORDER BY {$args['orderby']} {$args['order']}
         LIMIT %d, %d",
-        $args['offset'], $args['number']
-    );
+		$args['offset'],
+		$args['number']
+	);
 
-    $items = $wpdb->get_results( $sql );
+	$items = $wpdb->get_results( $sql );
 
-    return $items;
+	return $items;
 }
 
 /**
  * Numbers of tracks saved in the database.
- * 
+ *
  * @return int
  */
 function st_sales_count() {
-    global $wpdb;
+	global $wpdb;
 
-    return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}sales_tracker_sales");
+	return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}sales_tracker_sales" );
 }
 
 /**
@@ -136,43 +136,48 @@ function st_sales_count() {
  * @return array The filtered table data.
  */
 function st_filter_sales( $table_data, $search_key ) {
-    $filtered_table_data = array_values( array_filter( $table_data, function( $row ) use( $search_key ) {
-        foreach( $row as $row_val ) {
-            if( stripos( $row_val, $search_key ) !== false ) {
-                return true;
-            }
-        }
-    } ) );
+	$filtered_table_data = array_values(
+		array_filter(
+			$table_data,
+			function ( $row ) use( $search_key ) {
+				foreach ( $row as $row_val ) {
+					if ( stripos( $row_val, $search_key ) !== false ) {
+						return true;
+					}
+				}
+			}
+		)
+	);
 
-    return $filtered_table_data;
+	return $filtered_table_data;
 }
 
 /**
  * Get single sale item
- * 
+ *
  * @return object
  */
 function st_get_sale( $id ) {
-    global $wpdb;
+	global $wpdb;
 
-    $sale_item =  $wpdb->get_row(
-        $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sales_tracker_sales WHERE id = %d", $id )
-    );
+	$sale_item = $wpdb->get_row(
+		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sales_tracker_sales WHERE id = %d", $id )
+	);
 
-    return $sale_item;
+	return $sale_item;
 }
 
 /**
  * Delate sale item
- * 
+ *
  * @return int|boolean
  */
 function st_delete_sale( $id ) {
-    global $wpdb;
+	global $wpdb;
 
-    return $wpdb->delete(
-        $wpdb->prefix . 'sales_tracker_sales',
-        [ 'id' => $id ],
-        [ '%d' ]
-    );
+	return $wpdb->delete(
+		$wpdb->prefix . 'sales_tracker_sales',
+		array( 'id' => $id ),
+		array( '%d' )
+	);
 }

@@ -3,7 +3,7 @@
         'name' => 'masud/sales-tracker',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'e431097c8c006dd64ba8323a266bb552bbed7e14',
+        'reference' => '4ada5fddf5744ed2ad642bd6a0363cc63ac51696',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'masud/sales-tracker' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'e431097c8c006dd64ba8323a266bb552bbed7e14',
+            'reference' => '4ada5fddf5744ed2ad642bd6a0363cc63ac51696',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

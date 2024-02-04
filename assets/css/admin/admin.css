@@ -3,11 +3,12 @@
 	max-width: min(100%, 660px);
 	background-color: #fff;
 	padding: 2rem;
-	border-radius: 0.5rem;
+	border-radius: 0 0 0.5rem 0.5rem;
 	margin-inline: auto;
-
+	margin-top: 1.5rem;
 	display: flex;
 	flex-direction: column;
+	border-top: 2px solid #00a32a;
 }
 
 @media (min-width: 768px) {

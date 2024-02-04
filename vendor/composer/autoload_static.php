@@ -33,6 +33,7 @@ class ComposerStaticInit318b25b5b6854b2fd41f296d2b84d297
         'Sales\\Tracker\\Frontend' => __DIR__ . '/../..' . '/includes/Frontend.php',
         'Sales\\Tracker\\Frontend\\Shortcode' => __DIR__ . '/../..' . '/includes/Frontend/Shortcode.php',
         'Sales\\Tracker\\Installer' => __DIR__ . '/../..' . '/includes/Installer.php',
+        'Sales\\Tracker\\Traits\\Form_Errors' => __DIR__ . '/../..' . '/includes/Traits/Form_Errors.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

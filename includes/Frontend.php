@@ -7,10 +7,10 @@ namespace Sales\Tracker;
  */
 class Frontend {
 
-    /**
-     * Initialize the frontend class
-     */
-    function __construct() {
-        new Frontend\Shortcode();
-    }
+	/**
+	 * Initialize the frontend class
+	 */
+	function __construct() {
+		new Frontend\Shortcode();
+	}
 }
