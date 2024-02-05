@@ -76,6 +76,9 @@ if ( ! class_exists( 'Sales_Tracker' ) ) {
 		 * Initialize the plugin functions
 		 */
 		public function init_plugin() {
+
+			new \Sales\Tracker\Assets();
+
 			if ( is_admin() ) {
 				new Sales\Tracker\Admin();
 			} else {
