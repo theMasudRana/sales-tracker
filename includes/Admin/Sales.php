@@ -57,16 +57,17 @@ class Sales {
 			wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
 		}
 
-		$id          = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
-		$amount      = isset( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] ) : '';
-		$buyer       = isset( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] ) : '';
-		$receipt_id  = isset( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ) : '';
-		$items       = isset( $_POST['items'] ) ? sanitize_text_field( $_POST['items'] ) : '';
-		$buyer_email = isset( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] ) : '';
-		$note        = isset( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] ) : '';
-		$city        = isset( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] ) : '';
-		$phone       = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
-		$entry_by    = isset( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] ) : '';
+		$id          = ! empty( $_POST['id'] ) ? intval( $_POST['id'] )                             : 0;
+		$amount      = ! empty( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] )        : '';
+		$buyer       = ! empty( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] )          : '';
+		$receipt_id  = ! empty( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ): '';
+		$items       = ! empty( $_POST['items'] ) ? sanitize_textarea_field( $_POST['items'] )      : '';
+		$buyer_email = ! empty( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] )   : '';
+		$note        = ! empty( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] )        : '';
+		$city        = ! empty( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] )            : '';
+		$phone       = ! empty( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] )          : '';
+		$entry_by    = ! empty( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] )    : get_current_user_id();
+		$salt        = bin2hex( random_bytes(8) );
 
 		if ( empty( $amount ) ) {
 			$this->errors['amount'] = esc_html__( 'Please enter amount.', 'sales-tracker' );
@@ -90,9 +91,12 @@ class Sales {
 			'receipt_id'  => $receipt_id,
 			'items'       => $items,
 			'buyer_email' => $buyer_email,
+			'buyer_ip'    => $_SERVER['REMOTE_ADDR'],
 			'note'        => $note,
 			'city'        => $city,
 			'phone'       => $phone,
+			'hash_key'    => hash( 'sha512', $receipt_id . $salt ),
+			'entry_at'    => current_time( 'mysql' ),
 			'entry_by'    => $entry_by,
 		);
 
@@ -132,7 +136,9 @@ class Sales {
 		} else {
 			$redirect_to = admin_url( 'admin.php?page=sales-tracker&sale-deleted=false' );
 		}
+
 		wp_redirect( $redirect_to );
+
 		exit;
 	}
 }

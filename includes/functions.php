@@ -16,13 +16,13 @@ function st_insert_track( $args = array() ) {
 		'receipt_id'  => '',
 		'items'       => '',
 		'buyer_email' => '',
-		'buyer_ip'    => $_SERVER['REMOTE_ADDR'],
+		'buyer_ip'    => '',
 		'note'        => '',
 		'city'        => '',
 		'phone'       => '',
 		'hash_key'    => '',
-		'entry_at'    => current_time( 'mysql' ),
-		'entry_by'    => get_current_user_id(),
+		'entry_at'    => '',
+		'entry_by'    => '',
 	);
 
 	$data = wp_parse_args( $args, $defaults );
@@ -79,7 +79,7 @@ function st_insert_track( $args = array() ) {
 			return new \WP_Error( 'failed-to-insert', esc_html__( 'Failed to insert data.', 'sales-tracker' ) );
 		}
 
-		return $wpdb->inserted_id;
+		return $wpdb->insert_id;
 	}
 }
 

@@ -41,6 +41,11 @@ class Menu {
 		esc_html_e( 'Sales tracker settings' );
 	}
 
+	/**
+	 * Enqueue admin assets
+	 * 
+	 * @return void
+	 */
 	public function admin_assets() {
 		wp_enqueue_style( 'sales-tracker-admin-style' );
 		wp_enqueue_script( 'sales-tracker-admin-script' );
