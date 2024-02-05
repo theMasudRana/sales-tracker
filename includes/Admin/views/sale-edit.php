@@ -1,5 +1,6 @@
 <div class="wrap">
 	<h1 class="wp-heading-inline"><?php esc_html_e( 'Edit Sale', 'sales-tracker' ); ?></h1>
+	<hr class="wp-header-end">
 	<?php if ( isset( $_GET['sale-updated'] ) ) : ?>
 		<div class="notice notice-success">
 			<p><?php esc_html_e( 'Sale has been updated successfully!', 'sales-tracker' ); ?></p>

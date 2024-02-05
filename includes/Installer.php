@@ -40,21 +40,20 @@ class Installer {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$schema = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}sales_tracker_sales` (
-            `id` bigint NOT NULL AUTO_INCREMENT,
-            `amount` int NOT NULL,
-            `buyer` varchar(255) NOT NULL,
-            `receipt_id` varchar(20) DEFAULT NULL,
-            `items` varchar(255) DEFAULT NULL,
-            `buyer_email` varchar(50) NOT NULL,
-            `buyer_ip` varchar(20) DEFAULT NULL,
-            `note` text,
-            `city` varchar(20) DEFAULT NULL,
-            `phone` varchar(20) DEFAULT NULL,
-            `hash_key` varchar(255) DEFAULT NULL,
-            `entry_at` date DEFAULT NULL,
-            `entry_by` bigint DEFAULT NULL,
-            PRIMARY KEY (`id`)
-        ) $charset_collate";
+			`id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+			`amount` INT(10) NOT NULL,
+			`buyer` VARCHAR(255) NOT NULL,
+			`receipt_id` VARCHAR(20) DEFAULT NULL,
+			`items` VARCHAR(255) DEFAULT NULL,
+			`buyer_email` VARCHAR(50) NOT NULL,
+			`buyer_ip` VARCHAR(20) DEFAULT NULL,
+			`note` TEXT,
+			`city` VARCHAR(20) DEFAULT NULL,
+			`phone` VARCHAR(20) DEFAULT NULL,
+			`hash_key` VARCHAR(255) DEFAULT NULL,
+			`entry_at` DATE DEFAULT NULL,
+			`entry_by` INT(10) DEFAULT NULL
+		) $charset_collate";
 
 		if ( ! function_exists( 'dbDelta' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/upgrade.php';

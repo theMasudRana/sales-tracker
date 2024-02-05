@@ -1,6 +1,7 @@
 <div class="wrap">
 	<h1 class="wp-heading-inline"><?php esc_html_e( 'New Sale', 'sales-tracker' ); ?></h1>
 	<a href="<?php echo admin_url( 'admin.php?page=sales-tracker' ); ?>" class="page-title-action"><?php esc_html_e( 'View All Sales', 'sales-tracker' ); ?></a>
+	<hr class="wp-header-end">
 	<form action="" method="post">
 		<div class="sale-tracker-form">
 			<div class="st-form-item">

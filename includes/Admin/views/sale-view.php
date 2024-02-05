@@ -1,6 +1,7 @@
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php esc_html_e( 'Purchase History', 'sales-tracker' ); ?></h1>
     <a href="<?php echo admin_url( 'admin.php?page=sales-tracker' ); ?>" class="page-title-action"><?php esc_html_e( 'View All Sales', 'sales-tracker' ); ?></a>
+    <hr class="wp-header-end">
     <div class="single-sale-item">
         <?php
         $fields = [
