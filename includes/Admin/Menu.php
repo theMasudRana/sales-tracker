@@ -47,6 +47,7 @@ class Menu {
 	 * @return void
 	 */
 	public function admin_assets() {
+		wp_enqueue_style( 'sales-tracker-style-common' );
 		wp_enqueue_style( 'sales-tracker-admin-style' );
 		wp_enqueue_script( 'sales-tracker-admin-script' );
 	}

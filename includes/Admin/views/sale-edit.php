@@ -56,7 +56,7 @@
 			</div>
 			<input type="hidden" name="id" value="<?php echo esc_attr( $sale_item->id ); ?>">
 			<?php wp_nonce_field( 'new-tracker-item' ); ?>
-			<?php submit_button( esc_html__( 'Update Sale', 'sales-tracker' ), 'primary', 'add_tracker_item' ); ?>
+			<?php submit_button( esc_html__( 'Update Sale', 'sales-tracker' ), 'primary', 'add_sale_item' ); ?>
 		</div>
 	</form>
 </div>

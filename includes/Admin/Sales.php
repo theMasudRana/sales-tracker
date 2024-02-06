@@ -45,7 +45,7 @@ class Sales {
 	 */
 	public function form_handler() {
 
-		if ( ! isset( $_POST['add_tracker_item'] ) ) {
+		if ( ! isset( $_POST['add_sale_item'] ) ) {
 			return;
 		}
 
