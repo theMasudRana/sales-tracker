@@ -130,7 +130,7 @@ function st_sales_count() {
 /**
  * Filters table data based on a search key.
  *
- * @param array $table_data The table data to filter.
+ * @param array  $table_data The table data to filter.
  * @param string $search_key The search key to filter by.
  *
  * @return array The filtered table data.

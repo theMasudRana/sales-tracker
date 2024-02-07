@@ -31,7 +31,7 @@ class Menu {
 		add_submenu_page( $parent_slug, esc_attr__( 'All Sales', 'sales-tracker' ), esc_html__( 'All Sales', 'sales-tracker' ), $capability, $parent_slug, array( $this->tracker, 'sales_tracker_page' ) );
 		add_submenu_page( $parent_slug, esc_attr__( 'Add New Sale', 'sales-tracker' ), esc_html__( 'Add New Sale', 'sales-tracker' ), $capability, $parent_slug . '&action=new', array( $this->tracker, 'sales_tracker_page' ) );
 		add_submenu_page( $parent_slug, esc_attr__( 'Settings', 'sales-tracker' ), esc_html__( 'Settings', 'sales-tracker' ), $capability, 'sales-tracker-settings', array( $this, 'sales_tracker_settings' ) );
-		add_action( 'admin_head-' . $hook, [$this, 'admin_assets' ] );
+		add_action( 'admin_head-' . $hook, array( $this, 'admin_assets' ) );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Menu {
 
 	/**
 	 * Enqueue admin assets
-	 * 
+	 *
 	 * @return void
 	 */
 	public function admin_assets() {

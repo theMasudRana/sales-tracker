@@ -20,6 +20,7 @@ if ( ! class_exists( 'Sales_Tracker' ) ) {
 
 	/**
 	 * The final class that holds the plugin
+	 *
 	 * @since 1.0.0
 	 *
 	 * @package Sales_Tracker

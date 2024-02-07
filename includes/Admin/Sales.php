@@ -1,6 +1,7 @@
 <?php
 
 namespace Sales\Tracker\Admin;
+
 use Sales\Tracker\Traits\Form_Errors;
 
 /**
@@ -57,17 +58,17 @@ class Sales {
 			wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
 		}
 
-		$id          = ! empty( $_POST['id'] ) ? intval( $_POST['id'] )                             : 0;
-		$amount      = ! empty( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] )        : '';
-		$buyer       = ! empty( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] )          : '';
-		$receipt_id  = ! empty( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ): '';
-		$items       = ! empty( $_POST['items'] ) ? sanitize_textarea_field( $_POST['items'] )      : '';
-		$buyer_email = ! empty( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] )   : '';
-		$note        = ! empty( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] )        : '';
-		$city        = ! empty( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] )            : '';
-		$phone       = ! empty( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] )          : '';
-		$entry_by    = ! empty( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] )    : get_current_user_id();
-		$salt        = bin2hex( random_bytes(8) );
+		$id          = ! empty( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
+		$amount      = ! empty( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] ) : '';
+		$buyer       = ! empty( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] ) : '';
+		$receipt_id  = ! empty( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ) : '';
+		$items       = ! empty( $_POST['items'] ) ? sanitize_textarea_field( $_POST['items'] ) : '';
+		$buyer_email = ! empty( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] ) : '';
+		$note        = ! empty( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] ) : '';
+		$city        = ! empty( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] ) : '';
+		$phone       = ! empty( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
+		$entry_by    = ! empty( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] ) : get_current_user_id();
+		$salt        = bin2hex( random_bytes( 8 ) );
 
 		if ( empty( $amount ) ) {
 			$this->errors['amount'] = esc_html__( 'Please enter amount.', 'sales-tracker' );

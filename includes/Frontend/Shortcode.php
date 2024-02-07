@@ -17,7 +17,7 @@ class Shortcode {
 	/**
 	 * Shortcode handler callback
 	 *
-	 * @param array $atts
+	 * @param array  $atts
 	 * @param string $content
 	 *
 	 * @return string

@@ -46,11 +46,11 @@
 				<textarea name="note" id="note" cols="30" rows="2" placeholder="<?php esc_attr_e( 'Enter note', 'sales-tracker' ); ?>"></textarea>
 				<span class="fe-validation-message"></span>
 			</div>
-            <div class="st-form-item st-item-full-width">
-                <?php wp_nonce_field( 'st-fe-sales-form-nonce' ); ?>
-                <input type="hidden" name="action" value="st_fe_sales_form">
-                <input type="submit" name="st_fe_submit" value="<?php esc_html_e( 'Add Sale', 'sales-tracker' ); ?>">
-            </div>
+			<div class="st-form-item st-item-full-width">
+				<?php wp_nonce_field( 'st-fe-sales-form-nonce' ); ?>
+				<input type="hidden" name="action" value="st_fe_sales_form">
+				<input type="submit" name="st_fe_submit" value="<?php esc_html_e( 'Add Sale', 'sales-tracker' ); ?>">
+			</div>
 			
 		</div>
 	</form>
