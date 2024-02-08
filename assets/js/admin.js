@@ -1,53 +1,10 @@
 ; (function ($) {
-	function formSubmission() {
-		const salesForm = $('#sales-form');
-		const notificationWrapper = $('.st-notification');
-		const notificationText = $('.st-notification p');
-		const dismissButton = $('.st-notification-dismiss');
+	const salesForm = $('#sales-form');
+	const notificationWrapper = $('.st-notification');
+	const notificationText = $('.st-notification p');
+	const dismissButton = $('.st-notification-dismiss');
+	const submitButton = $('.st_sale_submission_button');
 
-		salesForm.on(
-			'submit',
-			function (event) {
-				event.preventDefault();
-				let data = salesForm.serialize();
-
-				$.post(
-					salesTracker.ajax_url,
-					data,
-					response => {
-						if (response?.success) {
-							notificationText.html(response.data.message);
-							notificationWrapper.addClass('success show');
-							salesForm.trigger('reset');
-						} else if (response?.data?.nonce_error) {
-							notificationText.html(response.data.nonce_error_message);
-							notificationWrapper.addClass('error show');
-						} else {
-							notificationText.html(response.data.message);
-							notificationWrapper.addClass('error show');
-						}
-					}
-				)
-					.fail(
-						response => {
-							notificationText.html(response.data.message);
-							notificationWrapper.addClass('error show');
-							salesForm.trigger('reset');
-						}
-					);
-			}
-		);
-
-		dismissButton.on(
-			'click',
-			() => {
-				notificationWrapper.removeClass('success show');
-			}
-		);
-	}
-
-	// Call the function
-	formSubmission();
 
 	// Validate the form
 	const inputElements = [
@@ -62,7 +19,6 @@
 		'#entry_by'
 	];
 
-	const submitButton = $('.st_sale_submission_button');
 
 	/**
 	 *  Validate the input fields
@@ -141,4 +97,51 @@
 	// Initial validation for form fields
 	updateSubmitButton();
 
+
+	function formSubmission() {
+		salesForm.on(
+			'submit',
+			function (event) {
+				event.preventDefault();
+				const data = salesForm.serialize();
+
+				$.post(
+					salesTracker.ajax_url,
+					data,
+					response => {
+						if (response?.success) {
+							notificationText.html(response.data.message);
+							notificationWrapper.addClass('success show');
+							salesForm.trigger('reset');
+							// Disable the submit button
+							submitButton.prop('disabled', true);
+						} else if (response?.data?.nonce_error) {
+							notificationText.html(response.data.nonce_error_message);
+							notificationWrapper.addClass('error show');
+						} else {
+							notificationText.html(response.data.message);
+							notificationWrapper.addClass('error show');
+						}
+					}
+				)
+					.fail(
+						response => {
+							notificationText.html(response.data.message);
+							notificationWrapper.addClass('error show');
+							salesForm.trigger('reset');
+						}
+					);
+			}
+		);
+
+		dismissButton.on(
+			'click',
+			() => {
+				notificationWrapper.removeClass('success show');
+			}
+		);
+	}
+
+	// Call the function
+	formSubmission();
 }(jQuery));

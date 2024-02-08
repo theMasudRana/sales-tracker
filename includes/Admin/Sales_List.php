@@ -17,8 +17,8 @@ class Sales_List extends \WP_List_Table {
 	function __construct() {
 		parent::__construct(
 			array(
-				'singular' => 'track',
-				'plural'   => 'tracks',
+				'singular' => 'sale',
+				'plural'   => 'sales',
 				'ajax'     => false,
 			)
 		);
@@ -71,10 +71,21 @@ class Sales_List extends \WP_List_Table {
 	 */
 	function get_bulk_actions() {
 		$actions = array(
-			'trash' => esc_html__( 'Move to Trash', 'sales-tracker' ),
+			'delete' => esc_html__( 'Move to Trash', 'sales-tracker' ),
 		);
 
 		return $actions;
+	}
+
+	/**
+	 * Process the bulk action
+	 *
+	 * @return void
+	 */
+	public function process_bulk_action() {
+		if ( 'delete' === $this->current_action() ) {
+			st_delete_all_sales();
+		}
 	}
 
 	/**
@@ -125,7 +136,8 @@ class Sales_List extends \WP_List_Table {
 	 */
 	protected function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="track_id[]" value="%d" />',
+			'<input type="checkbox" name="%1$s[]" value="%2$s" />',
+			$this->_args['singular'],
 			$item->id
 		);
 	}
@@ -141,6 +153,7 @@ class Sales_List extends \WP_List_Table {
 		$sortable = $this->get_sortable_columns();
 
 		$this->_column_headers = array( $column, $hidden, $sortable );
+		$this->process_bulk_action();
 
 		$per_page     = 10;
 		$current_page = $this->get_pagenum();

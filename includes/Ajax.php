@@ -50,6 +50,7 @@ class Ajax {
 			wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
 		}
 
+		$id          = ! empty( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
 		$amount      = ! empty( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] ) : '';
 		$buyer       = ! empty( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] ) : '';
 		$receipt_id  = ! empty( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ) : '';
@@ -75,6 +76,11 @@ class Ajax {
 			'hash_key'    => hash( 'sha512', $receipt_id . $salt ),
 			'entry_at'    => current_time( 'mysql' ),
 		);
-		st_insert_track( $args );
+
+		if ( $id ) {
+			$args['id'] = $id;
+		}
+
+		st_insert_sale( $args );
 	}
 }

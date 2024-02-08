@@ -7,7 +7,7 @@
  *
  * @return int|WP_Error
  */
-function st_insert_track( $args = array() ) {
+function st_insert_sale( $args = array() ) {
 	global $wpdb;
 
 	$defaults = array(
@@ -180,4 +180,22 @@ function st_delete_sale( $id ) {
 		array( 'id' => $id ),
 		array( '%d' )
 	);
+}
+
+/**
+ * Delete all sales
+ *
+ * @return int|boolean
+ */
+function st_delete_all_sales() {
+	global $wpdb;
+	$sales_table = $wpdb->prefix . 'sales_tracker_sales';
+	$sales       = ! empty( $_REQUEST['sale'] ) && is_array( $_REQUEST['sale'] ) ? $_REQUEST['sale'] : array();
+
+	if ( ! empty( $sales ) ) {
+		$sales        = array_map( 'intval', $sales ); // Ensure all values are integers
+		$placeholders = implode( ', ', array_fill( 0, count( $sales ), '%d' ) );
+		$sql          = "DELETE FROM $sales_table WHERE id IN($placeholders)";
+		$wpdb->query( $wpdb->prepare( $sql, $sales ) );
+	}
 }

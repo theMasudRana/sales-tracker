@@ -105,7 +105,7 @@ class Sales {
 			$args['id'] = $id;
 		}
 
-		$insert_id = st_insert_track( $args );
+		$insert_id = st_insert_sale( $args );
 
 		if ( is_wp_error( $insert_id ) ) {
 			wp_die( $insert_id->get_error_message() );
