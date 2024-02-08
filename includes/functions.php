@@ -33,7 +33,7 @@ function st_insert_sale( $args = array() ) {
 		unset( $data['id'] );
 
 		$updated = $wpdb->update(
-			"{$wpdb->prefix}sales_tracker_sales",
+			"{$wpdb->prefix}st_sales",
 			$data,
 			array( 'id' => $id ),
 			array(
@@ -57,7 +57,7 @@ function st_insert_sale( $args = array() ) {
 
 	} else {
 		$inserted = $wpdb->insert(
-			"{$wpdb->prefix}sales_tracker_sales",
+			"{$wpdb->prefix}st_sales",
 			$data,
 			array(
 				'%d',
@@ -104,7 +104,7 @@ function st_get_sales( $args = array() ) {
 	$args['offset'] = absint( $args['offset'] );
 
 	$sql = $wpdb->prepare(
-		"SELECT * FROM {$wpdb->prefix}sales_tracker_sales
+		"SELECT * FROM {$wpdb->prefix}st_sales
         ORDER BY {$args['orderby']} {$args['order']}
         LIMIT %d, %d",
 		$args['offset'],
@@ -124,7 +124,7 @@ function st_get_sales( $args = array() ) {
 function st_sales_count() {
 	global $wpdb;
 
-	return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}sales_tracker_sales" );
+	return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}st_sales" );
 }
 
 /**
@@ -161,7 +161,7 @@ function st_get_sale( $id ) {
 	global $wpdb;
 
 	$sale_item = $wpdb->get_row(
-		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}sales_tracker_sales WHERE id = %d", $id )
+		$wpdb->prepare( "SELECT * FROM {$wpdb->prefix}st_sales WHERE id = %d", $id )
 	);
 
 	return $sale_item;
@@ -176,7 +176,7 @@ function st_delete_sale( $id ) {
 	global $wpdb;
 
 	return $wpdb->delete(
-		$wpdb->prefix . 'sales_tracker_sales',
+		$wpdb->prefix . 'st_sales',
 		array( 'id' => $id ),
 		array( '%d' )
 	);
@@ -189,7 +189,7 @@ function st_delete_sale( $id ) {
  */
 function st_delete_all_sales() {
 	global $wpdb;
-	$sales_table = $wpdb->prefix . 'sales_tracker_sales';
+	$sales_table = $wpdb->prefix . 'st_sales';
 	$sales       = ! empty( $_REQUEST['sale'] ) && is_array( $_REQUEST['sale'] ) ? $_REQUEST['sale'] : array();
 
 	if ( ! empty( $sales ) ) {
