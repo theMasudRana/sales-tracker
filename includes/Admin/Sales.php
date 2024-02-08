@@ -1,6 +1,7 @@
 <?php
 
 namespace Sales\Tracker\Admin;
+
 use Sales\Tracker\Traits\Form_Errors;
 
 /**
@@ -45,7 +46,7 @@ class Sales {
 	 */
 	public function form_handler() {
 
-		if ( ! isset( $_POST['add_tracker_item'] ) ) {
+		if ( ! isset( $_POST['add_sale_item'] ) ) {
 			return;
 		}
 
@@ -57,17 +58,17 @@ class Sales {
 			wp_die( esc_html__( 'You are not authorized to submit this form.', 'sales-tracker' ) );
 		}
 
-		$id          = ! empty( $_POST['id'] ) ? intval( $_POST['id'] )                             : 0;
-		$amount      = ! empty( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] )        : '';
-		$buyer       = ! empty( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] )          : '';
-		$receipt_id  = ! empty( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ): '';
-		$items       = ! empty( $_POST['items'] ) ? sanitize_textarea_field( $_POST['items'] )      : '';
-		$buyer_email = ! empty( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] )   : '';
-		$note        = ! empty( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] )        : '';
-		$city        = ! empty( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] )            : '';
-		$phone       = ! empty( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] )          : '';
-		$entry_by    = ! empty( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] )    : get_current_user_id();
-		$salt        = bin2hex( random_bytes(8) );
+		$id          = ! empty( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
+		$amount      = ! empty( $_POST['amount'] ) ? sanitize_text_field( $_POST['amount'] ) : '';
+		$buyer       = ! empty( $_POST['buyer'] ) ? sanitize_text_field( $_POST['buyer'] ) : '';
+		$receipt_id  = ! empty( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ) : '';
+		$items       = ! empty( $_POST['items'] ) ? sanitize_textarea_field( $_POST['items'] ) : '';
+		$buyer_email = ! empty( $_POST['buyer_email'] ) ? sanitize_email( $_POST['buyer_email'] ) : '';
+		$note        = ! empty( $_POST['note'] ) ? sanitize_textarea_field( $_POST['note'] ) : '';
+		$city        = ! empty( $_POST['city'] ) ? sanitize_text_field( $_POST['city'] ) : '';
+		$phone       = ! empty( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
+		$entry_by    = ! empty( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] ) : get_current_user_id();
+		$salt        = bin2hex( random_bytes( 8 ) );
 
 		if ( empty( $amount ) ) {
 			$this->errors['amount'] = esc_html__( 'Please enter amount.', 'sales-tracker' );
@@ -104,7 +105,7 @@ class Sales {
 			$args['id'] = $id;
 		}
 
-		$insert_id = st_insert_track( $args );
+		$insert_id = st_insert_sale( $args );
 
 		if ( is_wp_error( $insert_id ) ) {
 			wp_die( $insert_id->get_error_message() );

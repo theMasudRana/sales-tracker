@@ -20,6 +20,7 @@ if ( ! class_exists( 'Sales_Tracker' ) ) {
 
 	/**
 	 * The final class that holds the plugin
+	 *
 	 * @since 1.0.0
 	 *
 	 * @package Sales_Tracker
@@ -78,6 +79,10 @@ if ( ! class_exists( 'Sales_Tracker' ) ) {
 		public function init_plugin() {
 
 			new \Sales\Tracker\Assets();
+
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+				new \Sales\Tracker\Ajax();
+			}
 
 			if ( is_admin() ) {
 				new Sales\Tracker\Admin();

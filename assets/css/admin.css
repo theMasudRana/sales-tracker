@@ -1,69 +1,7 @@
-.sale-tracker-form,
-.single-sale-item {
-	gap: 1.5rem;
-	max-width: min(100%, 660px);
-	background-color: #fff;
-	padding: 2rem;
-	border-radius: 0 0 0.5rem 0.5rem;
-	margin-inline: auto;
-	margin-top: 1.5rem;
-	display: flex;
-	flex-direction: column;
-	border-top: 2px solid #00a32a;
-}
-
-@media (min-width: 768px) {
-	.sale-tracker-form,
-	.single-sale-item {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-
-.st-form-item {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-}
-
-.st-form-item input,
-.st-form-item textarea {
-	border: 1px solid #e5e5e5;
-	padding: 4px 15px;
-}
-.st-form-item input:focus,
-.st-form-item textarea:focus {
-	border: 1px solid #2271b1;
-	box-shadow: none;
-}
-.st-form-item textarea {
-	padding: 8px 15px;
-}
-
-.st-form-item label {
-	font-weight: 600;
-	color: #000;
-}
-
 p.submit {
 	margin: 0;
 	padding: 0;
 	grid-column: span 2;
-}
-
-.st-item-full-width {
-	grid-column: span 2;
-}
-
-.st-form-item .message {
-	margin: 0;
-}
-.st-form-item:has(.error) {
-	color: red;
-}
-
-.st-form-item:has(.error) input {
-	border-color: red;
 }
 
 .st-sale-item {
@@ -77,4 +15,85 @@ p.submit {
 
 .st-sale-item p:first-child {
 	font-weight: 600;
+}
+
+.st-form-item input,
+.st-form-item textarea {
+	padding: 4px 1rem;
+}
+
+.st-notification {
+	background-color: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	padding: 8px 10px 8px 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	opacity: 0;
+	visibility: hidden;
+	transition: 0.1s;
+	position: absolute;
+	right: 20px;
+	top: 0;
+	min-width: 300px;
+}
+
+.st-notification.show {
+	opacity: 1;
+	visibility: visible;
+	top: 20px;
+}
+
+.st-notification p {
+	margin: 0;
+}
+
+.st-notification.success {
+	border-left: 4px solid green;
+}
+
+.st-notification-dismiss {
+	line-height: 1;
+	width: 1.75rem;
+	height: 1.75rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: red;
+	cursor: pointer;
+	border-color: transparent;
+	border-radius: 4px;
+}
+
+.st_sale_submission_button {
+	display: flex;
+	padding: 10px 20px;
+	border: 1px solid #2271b1;
+	cursor: pointer;
+	border-radius: 4px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	background-color: #2271b1;
+	color: #fff;
+}
+
+.st_sale_submission_button:not(:disabled):hover {
+	background-color: #f0f0f1;
+	border-color: #0a4b78;
+	color: #0a4b78;
+}
+
+.st_sale_submission_button:disabled {
+	color: #a7aaad;
+	background: #f6f7f7;
+	border-color: #dcdcde;
+	box-shadow: none;
+	text-shadow: none;
+	cursor: default;
+}
+
+.fe-validation-message {
+	color: red;
 }
