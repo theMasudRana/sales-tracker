@@ -17,7 +17,6 @@ class Admin {
 	 * Dispatch form actions
 	 */
 	public function dispatch_actions( $sales ) {
-		add_action( 'admin_init', array( $sales, 'form_handler' ) );
 		add_action( 'admin_post_st_delete_sale', array( $sales, 'delete_sale' ) );
 	}
 }

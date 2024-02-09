@@ -42,10 +42,6 @@ class Assets {
 				'version' => SALES_TRACKER_VERSION,
 				'deps'    => false,
 			),
-			'sales-tracker-style-common'   => array(
-				'src'     => SALES_TRACKER_ASSETS . '/css/common.css',
-				'version' => SALES_TRACKER_VERSION,
-			),
 		);
 	}
 
@@ -58,10 +54,6 @@ class Assets {
 		return array(
 			'sales-tracker-admin-style'  => array(
 				'src'     => SALES_TRACKER_ASSETS . '/css/admin.css',
-				'version' => SALES_TRACKER_VERSION,
-			),
-			'sales-tracker-style-common' => array(
-				'src'     => SALES_TRACKER_ASSETS . '/css/common.css',
 				'version' => SALES_TRACKER_VERSION,
 			),
 		);
@@ -124,15 +116,5 @@ class Assets {
 
 			wp_register_script( $handle, $script['src'], $deps, $script['version'], true );
 		}
-
-		wp_localize_script(
-			'sales-tracker-admin-script',
-			'salesTracker',
-			array(
-				'ajax_url'         => admin_url( 'admin-ajax.php' ),
-				'success_message'  => esc_html__( 'Form submission successful.', 'sales-tracker' ),
-				'submission_error' => esc_html__( 'Something went wrong!', 'sales-tracker' ),
-			)
-		);
 	}
 }

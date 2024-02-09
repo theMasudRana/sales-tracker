@@ -26,6 +26,8 @@ class ComposerStaticInit318b25b5b6854b2fd41f296d2b84d297
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Sales\\Tracker\\API' => __DIR__ . '/../..' . '/includes/API.php',
+        'Sales\\Tracker\\API\\Sales' => __DIR__ . '/../..' . '/includes/API/Sales.php',
         'Sales\\Tracker\\Admin' => __DIR__ . '/../..' . '/includes/Admin.php',
         'Sales\\Tracker\\Admin\\Menu' => __DIR__ . '/../..' . '/includes/Admin/Menu.php',
         'Sales\\Tracker\\Admin\\Sales' => __DIR__ . '/../..' . '/includes/Admin/Sales.php',

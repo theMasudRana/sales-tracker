@@ -11,7 +11,6 @@ class Frontend {
 	 * Initialize the frontend class
 	 */
 	function __construct() {
-		new Frontend\Shortcode();
 		new Frontend\Sales_Form();
 	}
 }
