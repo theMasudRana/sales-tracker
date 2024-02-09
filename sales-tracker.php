@@ -89,6 +89,8 @@ if ( ! class_exists( 'Sales_Tracker' ) ) {
 			} else {
 				new \Sales\Tracker\Frontend();
 			}
+
+			new \Sales\Tracker\API();
 		}
 
 		/**
