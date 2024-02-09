@@ -80,10 +80,6 @@ if ( ! class_exists( 'Sales_Tracker' ) ) {
 
 			new \Sales\Tracker\Assets();
 
-			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-				new \Sales\Tracker\Ajax();
-			}
-
 			if ( is_admin() ) {
 				new Sales\Tracker\Admin();
 			} else {

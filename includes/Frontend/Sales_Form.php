@@ -29,7 +29,7 @@ class Sales_Form {
 
 		ob_start();
 		?>
-			<div class="st-sales-form" id=""></div>
+			<div class="st-sales-form" id="sales-tracker-form">Hello World</div>
 		<?php
 		return ob_get_clean();
 	}
