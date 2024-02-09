@@ -51,7 +51,7 @@ class Installer {
 			`city` VARCHAR(20) DEFAULT NULL,
 			`phone` VARCHAR(20) DEFAULT NULL,
 			`hash_key` VARCHAR(255) DEFAULT NULL,
-			`entry_at` DATE DEFAULT NULL,
+			`entry_at` DATETIME DEFAULT NULL,
 			`entry_by` INT(10) DEFAULT NULL
 		) $charset_collate";
 

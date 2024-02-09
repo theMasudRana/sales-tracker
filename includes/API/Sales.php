@@ -35,6 +35,12 @@ class Sales extends WP_REST_Controller {
 					'permission_callback' => array( $this, 'get_sales_permissions_check' ),
 					'args'                => $this->get_collection_params(),
 				),
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'create_sale' ),
+					'permission_callback' => array( $this, 'create_sale_permissions_check' ),
+					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+				),
 				'schema' => array( $this, 'get_item_schema' ),
 			)
 		);
@@ -58,9 +64,15 @@ class Sales extends WP_REST_Controller {
 					),
 				),
 				array(
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'update_sale' ),
+					'permission_callback' => array( $this, 'update_sale_permissions_check' ),
+					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+				),
+				array(
 					'methods'             => WP_REST_Server::DELETABLE,
 					'callback'            => array( $this, 'delete_sale' ),
-					'permission_callback' => array( $this, 'get_delete_sale_permissions_check' ),
+					'permission_callback' => array( $this, 'delete_sale_permissions_check' ),
 				),
 				'schema' => array( $this, 'get_item_schema' ),
 			)
@@ -189,7 +201,7 @@ class Sales extends WP_REST_Controller {
 	 *
 	 * @return boolean
 	 */
-	public function get_delete_sale_permissions_check( $request ) {
+	public function delete_sale_permissions_check( $request ) {
 		return $this->get_sale_permissions_check( $request );
 	}
 
@@ -222,6 +234,48 @@ class Sales extends WP_REST_Controller {
 		$response = rest_ensure_response( $data );
 
 		return $data;
+	}
+
+	/**
+	 * Checks if a given request has access to create sale item
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return boolean
+	 */
+	public function create_sale_permissions_check( $request ) {
+		return $this->get_sales_permissions_check( $request );
+	}
+
+	/**
+	 * Creates sale item
+	 *
+	 * @param \WP_REST_Request
+	 *
+	 * @return \WP_ERROR|WP_REST_Response
+	 */
+	public function create_sale( $request ) {
+		$sale = $this->prepare_item_for_database( $request );
+
+		if ( is_wp_error( $sale ) ) {
+			return $sale;
+		}
+
+		$sale_id = st_insert_sale( $sale );
+
+		if ( is_wp_error( $sale_id ) ) {
+			$sale_id->add_data( array( 'status' => 400 ) );
+
+			return $sale_id;
+		}
+
+		$sale     = $this->get_sale_item( $sale_id );
+		$response = $this->prepare_item_for_response( $sale, $request );
+
+		$response->set_status( 201 );
+		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $sale_id ) ) );
+
+		return rest_ensure_response( $response );
 	}
 
 	/**
@@ -294,6 +348,95 @@ class Sales extends WP_REST_Controller {
 	}
 
 	/**
+	 * Prepares one item for create or update operation.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return \WP_Error|object
+	 */
+	protected function prepare_item_for_database( $request ) {
+		$prepared = array();
+
+		if ( isset( $request['amount'] ) ) {
+			$prepared['amount'] = $request['amount'];
+		}
+
+		if ( isset( $request['buyer'] ) ) {
+			$prepared['buyer'] = $request['buyer'];
+		}
+
+		if ( isset( $request['receipt_id'] ) ) {
+			$prepared['receipt_id'] = $request['receipt_id'];
+		}
+
+		if ( isset( $request['items'] ) ) {
+			$prepared['items'] = $request['items'];
+		}
+
+		if ( isset( $request['buyer_email'] ) ) {
+			$prepared['buyer_email'] = $request['buyer_email'];
+		}
+
+		if ( isset( $request['note'] ) ) {
+			$prepared['note'] = $request['note'];
+		}
+
+		if ( isset( $request['city'] ) ) {
+			$prepared['city'] = $request['city'];
+		}
+
+		if ( isset( $request['phone'] ) ) {
+			$prepared['phone'] = $request['phone'];
+		}
+
+		if ( isset( $request['entry_by'] ) ) {
+			$prepared['entry_by'] = $request['entry_by'];
+		}
+
+		return $prepared;
+	}
+
+	/**
+	 * Checks if a given request has access to update sale item
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return boolean
+	 */
+	public function update_sale_permissions_check( $request ) {
+		return $this->get_sale_permissions_check( $request );
+	}
+
+	/**
+	 * Update sale item
+	 *
+	 * @param \WP_REST_Request
+	 *
+	 * @return \WP_ERROR|WP_REST_Response
+	 */
+	public function update_sale( $request ) {
+		$sale     = $this->get_sale_item( $request['id'] );
+		$prepared = $this->prepare_item_for_database( $request );
+
+		$prepared = array_merge( (array) $sale, $prepared );
+
+		$updated = st_insert_sale( $prepared );
+
+		if ( ! $updated ) {
+			return new WP_Error(
+				'rest_not_updated',
+				esc_html__( 'Sorry, the sale could not be updated', 'sales-tracker' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		$sale     = $this->get_sale_item( $request['id'] );
+		$response = $this->prepare_item_for_response( $sale, $request );
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
 	 * Prepares links for the request.
 	 *
 	 * @param \WP_Post $post Post object.
@@ -331,22 +474,22 @@ class Sales extends WP_REST_Controller {
 			'type'       => 'object',
 			'properties' => array(
 				'id'          => array(
-					'description' => __( 'Unique identifier for the object.' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'sales-tracker' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
-				'buyer'       => array(
-					'description' => __( 'Name of the buyer.' ),
-					'type'        => 'string',
+				'amount'      => array(
+					'description' => esc_html__( 'Sale amount.', 'sales-tracker' ),
+					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 					'required'    => true,
 					'arg_options' => array(
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
-				'amount'      => array(
-					'description' => __( 'Sale amount.' ),
+				'buyer'       => array(
+					'description' => esc_html__( 'Name of the buyer.', 'sales-tracker' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'required'    => true,
@@ -355,7 +498,43 @@ class Sales extends WP_REST_Controller {
 					),
 				),
 				'receipt_id'  => array(
-					'description' => __( 'Receipt ID of the sale.' ),
+					'description' => esc_html__( 'Receipt ID of the sale.', 'sales-tracker' ),
+					'type'        => 'string',
+					'required'    => true,
+					'context'     => array( 'view', 'edit' ),
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
+				'items'       => array(
+					'description' => esc_html__( 'Purchased items', 'sales-tracker' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+					'required'    => true,
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_textarea_field',
+					),
+				),
+				'buyer_email' => array(
+					'description' => esc_html__( 'Email address of the buyer.', 'sales-tracker' ),
+					'type'        => 'string',
+					'required'    => true,
+					'context'     => array( 'view', 'edit' ),
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_email',
+					),
+				),
+				'note'        => array(
+					'description' => esc_html__( 'Purchase note', 'sales-tracker' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+					'required'    => true,
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_textarea_field',
+					),
+				),
+				'city'        => array(
+					'description' => esc_html__( 'Buyer city.', 'sales-tracker' ),
 					'type'        => 'string',
 					'required'    => true,
 					'context'     => array( 'view', 'edit' ),
@@ -364,60 +543,8 @@ class Sales extends WP_REST_Controller {
 					),
 				),
 				'phone'       => array(
-					'description' => __( 'Phone number of the buyer.' ),
-					'type'        => 'string',
-					'required'    => true,
-					'context'     => array( 'view', 'edit' ),
-					'arg_options' => array(
-						'sanitize_callback' => 'sanitize_text_field',
-					),
-				),
-				'buyer_email' => array(
-					'description' => __( 'Email address of the buyer.' ),
-					'type'        => 'string',
-					'required'    => true,
-					'context'     => array( 'view', 'edit' ),
-					'arg_options' => array(
-						'sanitize_callback' => 'sanitize_email',
-					),
-				),
-				'city'        => array(
-					'description' => __( 'Buyer city.' ),
-					'type'        => 'string',
-					'required'    => true,
-					'context'     => array( 'view', 'edit' ),
-					'arg_options' => array(
-						'sanitize_callback' => 'sanitize_text_field',
-					),
-				),
-				'date'        => array(
-					'description' => __( "The date the object was published, in the site's timezone." ),
-					'type'        => 'string',
-					'format'      => 'date-time',
-					'context'     => array( 'view' ),
-					'readonly'    => true,
-				),
-				'items'       => array(
-					'description' => __( 'Purchased items' ),
-					'type'        => 'string',
-					'context'     => array( 'view', 'edit' ),
-					'required'    => true,
-					'arg_options' => array(
-						'sanitize_callback' => 'sanitize_textarea_field',
-					),
-				),
-				'note'        => array(
-					'description' => __( 'Purchase note' ),
-					'type'        => 'string',
-					'context'     => array( 'view', 'edit' ),
-					'required'    => true,
-					'arg_options' => array(
-						'sanitize_callback' => 'sanitize_textarea_field',
-					),
-				),
-				'entry_by'    => array(
-					'description' => __( 'Stuff ID' ),
-					'type'        => 'string',
+					'description' => esc_html__( 'Phone number of the buyer.', 'sales-tracker' ),
+					'type'        => 'integer',
 					'required'    => true,
 					'context'     => array( 'view', 'edit' ),
 					'arg_options' => array(
@@ -425,10 +552,20 @@ class Sales extends WP_REST_Controller {
 					),
 				),
 				'entry_at'    => array(
-					'description' => __( 'Entry Date' ),
+					'description' => esc_html__( 'Entry Date', 'sales-tracker' ),
 					'type'        => 'string',
+					'format'      => 'date-time',
+					'context'     => array( 'view' ),
 					'readonly'    => true,
+				),
+				'entry_by'    => array(
+					'description' => esc_html__( 'Stuff ID', 'sales-tracker' ),
+					'type'        => 'integer',
+					'required'    => true,
 					'context'     => array( 'view', 'edit' ),
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_text_field',
+					),
 				),
 			),
 		);

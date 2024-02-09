@@ -10,19 +10,23 @@
 function st_insert_sale( $args = array() ) {
 	global $wpdb;
 
+	$entry_by   = ! empty( $_POST['entry_by'] ) ? sanitize_text_field( $_POST['entry_by'] ) : get_current_user_id();
+	$receipt_id = ! empty( $_POST['receipt_id'] ) ? sanitize_text_field( $_POST['receipt_id'] ) : '';
+	$salt       = bin2hex( random_bytes( 8 ) );
+
 	$defaults = array(
 		'amount'      => '',
 		'buyer'       => '',
 		'receipt_id'  => '',
 		'items'       => '',
 		'buyer_email' => '',
-		'buyer_ip'    => '',
+		'buyer_ip'    => $_SERVER['REMOTE_ADDR'],
 		'note'        => '',
 		'city'        => '',
 		'phone'       => '',
-		'hash_key'    => '',
-		'entry_at'    => '',
-		'entry_by'    => '',
+		'hash_key'    => hash( 'sha512', $receipt_id . $salt ),
+		'entry_at'    => current_time( 'mysql' ),
+		'entry_by'    => $entry_by,
 	);
 
 	$data = wp_parse_args( $args, $defaults );

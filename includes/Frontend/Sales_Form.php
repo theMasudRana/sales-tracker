@@ -28,8 +28,9 @@ class Sales_Form {
 		wp_enqueue_script( 'sales-tracker-frontend-script' );
 
 		ob_start();
-		include __DIR__ . '/views/sales-form.php';
-
+		?>
+			<div class="st-sales-form" id=""></div>
+		<?php
 		return ob_get_clean();
 	}
 }

@@ -114,7 +114,6 @@ class Sales_List extends \WP_List_Table {
 	 */
 	public function column_buyer( $item ) {
 		$actions           = array();
-		$actions['edit']   = sprintf( '<a href = "%s" title = "%s">%s</a>', admin_url( 'admin.php?page=sales-tracker&action=edit&id=' . $item->id ), $item->id, esc_html__( 'Edit', 'sales-tracker' ), esc_html__( 'Edit', 'sales-tracker' ) );
 		$actions['view']   = sprintf( '<a href = "%s" title = "%s">%s</a>', admin_url( 'admin.php?page=sales-tracker&action=view&id=' . $item->id ), $item->id, esc_html__( 'View', 'sales-tracker' ), esc_html__( 'View', 'sales-tracker' ) );
 		$actions['delete'] = sprintf( '<a href="%s" class="st-delete-link" onclick="return confirm(\'Are you sure?\');" title="%s">%s</a>', wp_nonce_url( admin_url( 'admin-post.php?action=st_delete_sale&id=' . $item->id ), 'st_delete_sale' ), $item->id, esc_html__( 'Delete', 'sales-tracker' ), esc_html__( 'Delete', 'sales-tracker' ) );
 
