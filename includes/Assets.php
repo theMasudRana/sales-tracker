@@ -23,9 +23,9 @@ class Assets {
 	public function get_frontend_scripts() {
 		return array(
 			'sales-tracker-frontend-script' => array(
-				'src'     => SALES_TRACKER_ASSETS . '/js/frontend.js',
+				'src'     => SALES_TRACKER_BUILD . '/index.js',
 				'version' => SALES_TRACKER_VERSION,
-				'deps'    => array( 'jquery' ),
+				'deps'    => array( 'wp-element' ),
 			),
 		);
 	}
@@ -38,7 +38,7 @@ class Assets {
 	public function get_frontend_styles() {
 		return array(
 			'sales-tracker-frontend-style' => array(
-				'src'     => SALES_TRACKER_ASSETS . '/css/frontend.css',
+				'src'     => SALES_TRACKER_BUILD . '/index.css',
 				'version' => SALES_TRACKER_VERSION,
 				'deps'    => false,
 			),
@@ -94,6 +94,16 @@ class Assets {
 
 			wp_register_script( $handle, $script['src'], $deps, $script['version'], true );
 		}
+
+		wp_localize_script(
+			'sales-tracker-frontend-script',
+			'salesTracker',
+			array(
+				'site_url'         => site_url(),
+				'success_message'  => esc_html__( 'Form submission successful.', 'sales-tracker' ),
+				'submission_error' => esc_html__( 'Something went wrong!', 'sales-tracker' ),
+			)
+		);
 	}
 
 	/**

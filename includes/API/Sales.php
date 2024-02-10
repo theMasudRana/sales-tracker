@@ -221,7 +221,7 @@ class Sales extends WP_REST_Controller {
 		if ( ! $deleted ) {
 			return new WP_Error(
 				'rest_not_deleted',
-				esc_html__( 'Sorry, the sale item could not be deleted.' ),
+				esc_html__( 'Sorry, the sale item could not be deleted.', 'sales-tracker' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -544,7 +544,7 @@ class Sales extends WP_REST_Controller {
 				),
 				'phone'       => array(
 					'description' => esc_html__( 'Phone number of the buyer.', 'sales-tracker' ),
-					'type'        => 'integer',
+					'type'        => 'string',
 					'required'    => true,
 					'context'     => array( 'view', 'edit' ),
 					'arg_options' => array(

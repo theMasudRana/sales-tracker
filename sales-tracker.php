@@ -71,6 +71,7 @@ if ( ! class_exists( 'Sales_Tracker' ) ) {
 			define( 'SALES_TRACKER_PATH', __DIR__ );
 			define( 'SALES_TRACKER_URL', plugins_url( '', SALES_TRACKER_FILE ) );
 			define( 'SALES_TRACKER_ASSETS', SALES_TRACKER_URL . '/assets' );
+			define( 'SALES_TRACKER_BUILD', SALES_TRACKER_URL . '/build' );
 		}
 
 		/**

@@ -24,12 +24,11 @@ class Sales_Form {
 	 */
 	public function render_shortcode( $atts, $content ) {
 		wp_enqueue_style( 'sales-tracker-frontend-style' );
-		wp_enqueue_style( 'sales-tracker-style-common' );
 		wp_enqueue_script( 'sales-tracker-frontend-script' );
 
 		ob_start();
 		?>
-			<div class="st-sales-form" id="sales-tracker-form">Hello World</div>
+			<div class="st-sales-form" id="sales-tracker-form"></div>
 		<?php
 		return ob_get_clean();
 	}
