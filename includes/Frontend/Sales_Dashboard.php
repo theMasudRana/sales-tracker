@@ -5,13 +5,13 @@ namespace Sales\Tracker\Frontend;
 /**
  * Sales Form shortcode
  */
-class Sales_Form {
+class Sales_Dashboard {
 
 	/**
 	 * Initialize the class
 	 */
 	function __construct() {
-		add_shortcode( 'sales_tracker_form', array( $this, 'render_shortcode' ) );
+		add_shortcode( 'sales_tracker_dashboard', array( $this, 'render_shortcode' ) );
 	}
 
 	/**
@@ -28,7 +28,13 @@ class Sales_Form {
 
 		ob_start();
 		?>
-			<div class="st-sales-form" id="sales-tracker-form"></div>
+			<div class="st-sales-dashboard">
+				<?php if ( current_user_can( 'edit_posts' ) ) : ?>
+					<div id="sales-tracker-dashboard"></div>
+				<?php else : ?>
+					<p><?php esc_html_e( 'You need to be at list an editor to view Sales Tracker Dashboard.' ); ?></p>
+				<?php endif; ?>
+			</div>
 		<?php
 		return ob_get_clean();
 	}

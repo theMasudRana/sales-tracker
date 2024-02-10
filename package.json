@@ -1,0 +1,27 @@
+{
+  "name": "sales-tracker",
+  "version": "1.0.0",
+  "description": "Sales Tracker WordPress plugin",
+  "main": "index.js",
+  "devDependencies": {
+    "@wordpress/scripts": "^27.2.0"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theMasudRana/sales-tracker.git"
+  },
+  "author": "Masud Rana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theMasudRana/sales-tracker/issues"
+  },
+  "homepage": "https://github.com/theMasudRana/sales-tracker#readme",
+  "dependencies": {
+    "antd": "^5.14.0",
+    "js-cookie": "^3.0.5"
+  }
+}

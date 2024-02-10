@@ -2,14 +2,10 @@
 
 namespace Sales\Tracker\Admin;
 
-use Sales\Tracker\Traits\Form_Errors;
-
 /**
  * Sale handler class
  */
 class Sales {
-
-	use Form_Errors;
 
 	/**
 	 * Sales tracker page routing
@@ -21,17 +17,11 @@ class Sales {
 		$id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
 
 		$templates = array(
-			'view' => __DIR__ . '/views/sale-view.php',
 			'list' => __DIR__ . '/views/sale-list.php',
 		);
 
 		$template = isset( $templates[ $action ] ) ? $templates[ $action ] : $templates['list'];
-	
-		$sale_item = null;
-		if ( $action === 'view' ) {
-			$sale_item = st_get_sale( $id );
-		}
-	
+
 		if ( file_exists( $template ) ) {
 			include $template;
 		}

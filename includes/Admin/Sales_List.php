@@ -176,7 +176,7 @@ class Sales_List extends \WP_List_Table {
 
 		$this->set_pagination_args(
 			array(
-				'total_items' => st_sales_count(),
+				'total_items' => st_sales_count( $args ),
 				'per_page'    => $per_page,
 			)
 		);

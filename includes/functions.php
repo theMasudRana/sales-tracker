@@ -96,23 +96,33 @@ function st_get_sales( $args = array() ) {
 	global $wpdb;
 
 	$defaults = array(
-		'number'  => 20,
-		'offset'  => 0,
-		'orderby' => 'id',
-		'order'   => 'DESC',
+		'number'     => 20,
+		'offset'     => 0,
+		'orderby'    => 'id',
+		'order'      => 'DESC',
+		'start_date' => '',
+		'end_date'   => '',
 	);
 
 	$args = wp_parse_args( $args, $defaults );
 
-	$args['number'] = absint( $args['number'] );
-	$args['offset'] = absint( $args['offset'] );
+	$args['number'] = isset( $args['number'] ) ? absint( $args['number'] ) : $defaults['number'];
+	$args['offset'] = isset( $args['offset'] ) ? absint( $args['offset'] ) : $defaults['offset'];
+
+	$where = '';
+	if ( ! empty( $args['start_date'] ) && ! empty( $args['end_date'] ) ) {
+		$args['start_date'] = sanitize_text_field( $args['start_date'] );
+		$args['end_date']   = sanitize_text_field( $args['end_date'] );
+		$where              = $wpdb->prepare( 'WHERE entry_at BETWEEN %s AND %s', $args['start_date'], $args['end_date'] );
+	}
 
 	$sql = $wpdb->prepare(
 		"SELECT * FROM {$wpdb->prefix}st_sales
+        {$where}
         ORDER BY {$args['orderby']} {$args['order']}
         LIMIT %d, %d",
 		$args['offset'],
-		$args['number']
+		$args['number'],
 	);
 
 	$items = $wpdb->get_results( $sql );
@@ -125,10 +135,20 @@ function st_get_sales( $args = array() ) {
  *
  * @return int
  */
-function st_sales_count() {
+function st_sales_count( $args = array() ) {
 	global $wpdb;
 
-	return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}st_sales" );
+	$start_date = isset( $args['start_date'] ) ? $args['start_date'] : '';
+	$end_date   = isset( $args['end_date'] ) ? $args['end_date'] : '';
+
+	$where = '';
+	if ( ! empty( $start_date ) && ! empty( $end_date ) ) {
+		$where = $wpdb->prepare( 'WHERE entry_at BETWEEN %s AND %s', $start_date, $end_date );
+	}
+
+	$sql = "SELECT count(id) FROM {$wpdb->prefix}st_sales {$where}";
+
+	return (int) $wpdb->get_var( $sql );
 }
 
 /**
@@ -149,6 +169,7 @@ function st_filter_sales( $table_data, $search_key ) {
 						return true;
 					}
 				}
+				return false;
 			}
 		)
 	);

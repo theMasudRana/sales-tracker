@@ -27,9 +27,9 @@ class Menu {
 		$parent_slug = 'sales-tracker';
 		$capability  = 'manage_options';
 
-		$hook = add_menu_page( esc_html__( 'Sales Tracker', 'sales-tracker' ), esc_html__( 'Sales Tracker', 'sales-tracker' ), $capability, $parent_slug, array( $this->tracker, 'sales_tracker_page' ), 'dashicons-analytics' );
+		add_menu_page( esc_html__( 'Sales Tracker', 'sales-tracker' ), esc_html__( 'Sales Tracker', 'sales-tracker' ), $capability, $parent_slug, array( $this->tracker, 'sales_tracker_page' ), 'dashicons-analytics' );
 		add_submenu_page( $parent_slug, esc_attr__( 'All Sales', 'sales-tracker' ), esc_html__( 'All Sales', 'sales-tracker' ), $capability, $parent_slug, array( $this->tracker, 'sales_tracker_page' ) );
-		add_submenu_page( $parent_slug, esc_attr__( 'Settings', 'sales-tracker' ), esc_html__( 'Settings', 'sales-tracker' ), $capability, 'sales-tracker-settings', array( $this, 'sales_tracker_settings' ) );
+		$hook = add_submenu_page( $parent_slug, esc_attr__( 'Settings', 'sales-tracker' ), esc_html__( 'Settings', 'sales-tracker' ), $capability, 'sales-tracker-settings', array( $this, 'sales_tracker_settings' ) );
 		add_action( 'admin_head-' . $hook, array( $this, 'admin_assets' ) );
 	}
 
@@ -37,7 +37,7 @@ class Menu {
 	 * Sales tracker settings callback
 	 */
 	public function sales_tracker_settings() {
-		esc_html_e( 'Sales tracker settings' );
+		require_once __DIR__ . '/views/sale-settings.php';
 	}
 
 	/**

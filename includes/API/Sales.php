@@ -87,11 +87,7 @@ class Sales extends WP_REST_Controller {
 	 * @return boolean
 	 */
 	public function get_sales_permissions_check( $request ) {
-		if ( current_user_can( 'manage_options' ) ) {
-			return true;
-		}
-
-		return false;
+		return current_user_can( 'manage_options' );
 	}
 
 	/**
@@ -107,6 +103,7 @@ class Sales extends WP_REST_Controller {
 		$params = $this->get_collection_params();
 
 		foreach ( $params as $key => $value ) {
+
 			if ( isset( $request[ $key ] ) ) {
 				$args[ $key ] = $request[ $key ];
 			}
@@ -114,24 +111,35 @@ class Sales extends WP_REST_Controller {
 
 		$args['number'] = $args['per_page'];
 		$args['offset'] = $args['number'] * ( $args['page'] - 1 );
+		$current_page   = (int) $args['page'];
+
+		$start_date = isset( $_GET['start_date'] ) ? $_GET['start_date'] : '';
+		$end_date   = isset( $_GET['end_date'] ) ? $_GET['end_date'] : '';
+
+		$args['start_date'] = $start_date;
+		$args['end_date']   = $end_date;
 
 		unset( $args['per_page'] );
 		unset( $args['page'] );
 
-		$data  = array();
-		$sales = st_get_sales( $args );
+		$data = array();
+
+		$sales = st_get_sales( $args ); // I have all the data her
 
 		foreach ( $sales as $sale ) {
 			$response = $this->prepare_item_for_response( $sale, $request );
 			$data[]   = $this->prepare_response_for_collection( $response );
 		}
 
-		$total     = st_sales_count();
-		$max_pages = ceil( $total / (int) $args['number'] );
-		$response  = rest_ensure_response( $data );
+		$total = st_sales_count( $args );
 
-		$response->header( 'X-WP-Total', (int) $total );
-		$response->header( 'X-WP-TotalPages', (int) $max_pages );
+		$response = rest_ensure_response(
+			array(
+				'data'         => $data,
+				'current_page' => $current_page,
+				'total'        => $total,
+			)
+		);
 
 		return $response;
 	}
@@ -221,7 +229,7 @@ class Sales extends WP_REST_Controller {
 		if ( ! $deleted ) {
 			return new WP_Error(
 				'rest_not_deleted',
-				esc_html__( 'Sorry, the sale item could not be deleted.' ),
+				esc_html__( 'Sorry, the sale item could not be deleted.', 'sales-tracker' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -544,7 +552,7 @@ class Sales extends WP_REST_Controller {
 				),
 				'phone'       => array(
 					'description' => esc_html__( 'Phone number of the buyer.', 'sales-tracker' ),
-					'type'        => 'integer',
+					'type'        => 'string',
 					'required'    => true,
 					'context'     => array( 'view', 'edit' ),
 					'arg_options' => array(
