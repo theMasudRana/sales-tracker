@@ -1,1 +1,0 @@
-{"version":3,"file":"index.css","mappings":";;;AACC;EACC;EACA;EACA;AAAF,C","sources":["webpack://sales-tracker/./src/scss/index.scss"],"sourcesContent":[".spinner-wrapper {\r\n\t.content {\r\n\t\tpadding: 50px;\r\n\t\tbackground: rgba(0, 0, 0, 0.05);\r\n\t\tborder-radius: 4px;\r\n\t}\r\n}\r\n"],"names":[],"sourceRoot":""}
