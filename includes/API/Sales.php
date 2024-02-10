@@ -103,7 +103,7 @@ class Sales extends WP_REST_Controller {
 		$params = $this->get_collection_params();
 
 		foreach ( $params as $key => $value ) {
-			
+
 			if ( isset( $request[ $key ] ) ) {
 				$args[ $key ] = $request[ $key ];
 			}
@@ -122,8 +122,7 @@ class Sales extends WP_REST_Controller {
 		unset( $args['per_page'] );
 		unset( $args['page'] );
 
-		$data  = array();
-		
+		$data = array();
 
 		$sales = st_get_sales( $args ); // I have all the data her
 
@@ -132,13 +131,15 @@ class Sales extends WP_REST_Controller {
 			$data[]   = $this->prepare_response_for_collection( $response );
 		}
 
-		$total        = st_sales_count( $args );
+		$total = st_sales_count( $args );
 
-		$response  = rest_ensure_response( [
-			'data'	       => $data,
-			'current_page' => $current_page,
-			'total'        => $total,
-		] );
+		$response = rest_ensure_response(
+			array(
+				'data'         => $data,
+				'current_page' => $current_page,
+				'total'        => $total,
+			)
+		);
 
 		return $response;
 	}

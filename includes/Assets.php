@@ -52,7 +52,7 @@ class Assets {
 	 */
 	public function get_admin_styles() {
 		return array(
-			'sales-tracker-admin-style'  => array(
+			'sales-tracker-admin-style' => array(
 				'src'     => SALES_TRACKER_ASSETS . '/css/admin.css',
 				'version' => SALES_TRACKER_VERSION,
 			),
@@ -102,7 +102,7 @@ class Assets {
 				'site_url'         => site_url(),
 				'success_message'  => esc_html__( 'Form submission successful.', 'sales-tracker' ),
 				'submission_error' => esc_html__( 'Something went wrong!', 'sales-tracker' ),
-				'nonce'            => wp_create_nonce( 'wp_rest' )
+				'nonce'            => wp_create_nonce( 'wp_rest' ),
 			)
 		);
 	}

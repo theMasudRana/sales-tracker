@@ -28,13 +28,13 @@ class Sales_Dashboard {
 
 		ob_start();
 		?>
-            <div class="st-sales-dashboard">
-                <?php if ( current_user_can( 'edit_posts' ) ): ?>
-                    <div id="sales-tracker-dashboard"></div>
-                <?php else : ?>
-                    <p><?php esc_html_e( 'You need to be at list an editor to view Sales Tracker Dashboard.' ); ?></p>
-                <?php endif; ?>
-            </div>
+			<div class="st-sales-dashboard">
+				<?php if ( current_user_can( 'edit_posts' ) ) : ?>
+					<div id="sales-tracker-dashboard"></div>
+				<?php else : ?>
+					<p><?php esc_html_e( 'You need to be at list an editor to view Sales Tracker Dashboard.' ); ?></p>
+				<?php endif; ?>
+			</div>
 		<?php
 		return ob_get_clean();
 	}

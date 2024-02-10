@@ -17,11 +17,11 @@ class Sales {
 		$id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
 
 		$templates = array(
-			'list'     => __DIR__ . '/views/sale-list.php',
+			'list' => __DIR__ . '/views/sale-list.php',
 		);
 
 		$template = isset( $templates[ $action ] ) ? $templates[ $action ] : $templates['list'];
-	
+
 		if ( file_exists( $template ) ) {
 			include $template;
 		}
