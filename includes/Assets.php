@@ -102,6 +102,7 @@ class Assets {
 				'site_url'         => site_url(),
 				'success_message'  => esc_html__( 'Form submission successful.', 'sales-tracker' ),
 				'submission_error' => esc_html__( 'Something went wrong!', 'sales-tracker' ),
+				'nonce'            => wp_create_nonce( 'wp_rest' )
 			)
 		);
 	}

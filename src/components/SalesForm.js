@@ -6,7 +6,7 @@ function SalesForm() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa('masud:1234')
+                'X-WP-Nonce': salesTracker.nonce
             },
             body: JSON.stringify(values),
         })

@@ -87,11 +87,7 @@ class Sales extends WP_REST_Controller {
 	 * @return boolean
 	 */
 	public function get_sales_permissions_check( $request ) {
-		if ( current_user_can( 'manage_options' ) ) {
-			return true;
-		}
-
-		return false;
+		return current_user_can( 'manage_options' );
 	}
 
 	/**

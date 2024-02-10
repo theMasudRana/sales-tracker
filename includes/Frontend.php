@@ -12,5 +12,6 @@ class Frontend {
 	 */
 	function __construct() {
 		new Frontend\Sales_Form();
+		new Frontend\Sales_Dashboard();
 	}
 }

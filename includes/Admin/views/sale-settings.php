@@ -7,7 +7,7 @@
         <code>[sales_tracker_form]</code>
     </div>
     <div class="st-item">
-        <h3><?php esc_html_e( 'Sale tracker list shortcode', 'sales-tracker' ); ?></h3>
-        <code>[sales_tracker_list]</code>
+        <h3><?php esc_html_e( 'Sale tracker dashboard shortcode', 'sales-tracker' ); ?></h3>
+        <code>[sales_tracker_dashboard]</code>
     </div>
 </div>
