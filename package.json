@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/theMasudRana/sales-tracker#readme",
   "dependencies": {
-    "antd": "^5.14.0"
+    "antd": "^5.14.0",
+    "js-cookie": "^3.0.5"
   }
 }

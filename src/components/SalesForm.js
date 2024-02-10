@@ -1,35 +1,67 @@
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, notification } from 'antd';
+const { Option } = Select;
 import { st_sales } from '../endpoints/endpoints';
 function SalesForm() {
+    const [form] = Form.useForm();
+    const [api, contextHolder] = notification.useNotification();
+    const openNotification = (placement) => {
+        api.info({
+            message: 'Sales added successfully!',
+            placement,
+        });
+    };
     const onFinish = (values) => {
+
+        // Check if the sales-tracker-notification cookie is expired or not
+        const cookie = document.cookie.split(';').find(c => c.trim().startsWith('sales-tracker-notification='));
+        if (cookie) {
+            const cookieValue = cookie.split('=')[1];
+            if (cookieValue === 'true') {
+                openNotification('topRight', 'You have already added a sale today!');
+                // alert('You have already added a sale today!');
+                // return;
+            }
+        }
+
+        const { prefix, ...rest } = values;
+        const newValue = {
+            ...rest,
+            phone: values.prefix + values.phone,
+        }
+
+
         fetch(st_sales, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-WP-Nonce': salesTracker.nonce
             },
-            body: JSON.stringify(values),
+            body: JSON.stringify(newValue),
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Success:', data);
+                openNotification('topRight', 'Sales added successfully!');
+                form.resetFields();
+                const date = new Date();
+                date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
+                document.cookie = `sales-tracker-notification=true; expires=${date.toUTCString()}; path=/`;
+                console.log('Success:', date);
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
     }
-    // const prefixSelector = (
-    //     <Form.Item noStyle>
-    //         <Select
-    //             style={{
-    //                 width: 100,
-    //             }}
-    //             defaultOpen
-    //         >
-    //             <Select.Option value="880">880</Select.Option>
-    //         </Select>
-    //     </Form.Item>
-    // );
+    const prefixSelector = (
+        <Form.Item name="prefix" noStyle>
+            <Select
+                style={{
+                    width: 100,
+                }}
+            >
+                <Option value="880">+880</Option>
+            </Select>
+        </Form.Item>
+    );
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -37,6 +69,7 @@ function SalesForm() {
 
     return (
         <div>
+            {contextHolder}
             <Form
                 name="sales-form"
                 labelCol={{
@@ -55,6 +88,7 @@ function SalesForm() {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
+                form={form}
             >
                 <Form.Item
                     label="Buyer"
@@ -138,7 +172,7 @@ function SalesForm() {
                     ]}
                 >
                     <Input
-                        // addonBefore={prefixSelector}
+                        addonBefore={prefixSelector}
                         style={{
                             width: '100%',
                         }}

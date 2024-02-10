@@ -100,6 +100,8 @@ function st_get_sales( $args = array() ) {
 		'offset'  => 0,
 		'orderby' => 'id',
 		'order'   => 'DESC',
+		'start_date' => '',
+		'end_date' => '',
 	);
 
 	$args = wp_parse_args( $args, $defaults );
@@ -107,13 +109,36 @@ function st_get_sales( $args = array() ) {
 	$args['number'] = absint( $args['number'] );
 	$args['offset'] = absint( $args['offset'] );
 
-	$sql = $wpdb->prepare(
-		"SELECT * FROM {$wpdb->prefix}st_sales
-        ORDER BY {$args['orderby']} {$args['order']}
-        LIMIT %d, %d",
-		$args['offset'],
-		$args['number']
-	);
+	$args['start_date'] = sanitize_text_field( $args['start_date'] );
+	$args['end_date'] = sanitize_text_field( $args['end_date'] );
+	
+
+
+	$sql = '';
+
+	if ( ! empty( $args['start_date'] ) && ! empty( $args['end_date'] ) ) {
+		$sql = $wpdb->prepare(
+			"SELECT * FROM {$wpdb->prefix}st_sales
+			WHERE entry_at BETWEEN %s AND %s
+			ORDER BY {$args['orderby']} {$args['order']}
+			LIMIT %d, %d",
+			$args['start_date'],
+			$args['end_date'],
+			$args['offset'],
+			$args['number'],
+		);
+	} else {
+		$sql = $wpdb->prepare(
+			"SELECT * FROM {$wpdb->prefix}st_sales
+			ORDER BY {$args['orderby']} {$args['order']}
+			LIMIT %d, %d",
+			$args['offset'],
+			$args['number'],
+		);
+	}
+
+	// error_log( print_r( $sql, true ) );
+
 
 	$items = $wpdb->get_results( $sql );
 
@@ -125,10 +150,24 @@ function st_get_sales( $args = array() ) {
  *
  * @return int
  */
-function st_sales_count() {
+function st_sales_count( $args ) {
 	global $wpdb;
 
-	return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}st_sales" );
+	$start_date = isset( $args['start_date'] ) ? $args['start_date'] : '';
+	$end_date   = isset( $args['end_date'] ) ? $args['end_date'] : '';
+
+	if ( empty( $start_date ) || empty( $end_date ) ) {
+		return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}st_sales" );
+	}
+
+	$sql = $wpdb->prepare(
+		"SELECT count(id) FROM {$wpdb->prefix}st_sales
+		WHERE entry_at BETWEEN %s AND %s",
+		$start_date,
+		$end_date
+	);
+
+	return (int) $wpdb->get_var( $sql );
 }
 
 /**
