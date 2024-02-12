@@ -7,8 +7,15 @@
     "@wordpress/scripts": "^27.2.0"
   },
   "scripts": {
-    "build": "wp-scripts build",
-    "start": "wp-scripts start"
+		"build": "wp-scripts build --webpack-copy-php",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --webpack-copy-php",
+		"app:start": "wp-scripts start src/application/index.js --output-path=assets/js/application",
+		"app:build": "wp-scripts build src/application/index.js --output-path=assets/js/application"
   },
   "repository": {
     "type": "git",

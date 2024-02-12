@@ -15,7 +15,7 @@ class Sales_Dashboard {
 	}
 
 	/**
-	 * Render the [sales_tracker_form] shortcode
+	 * Render the [sales_tracker_dashboard] shortcode
 	 *
 	 * @param array  $atts
 	 * @param string $content

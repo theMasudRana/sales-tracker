@@ -120,3 +120,11 @@ if ( ! function_exists( 'sales_tracker' ) ) {
 	// Start the plugin
 	sales_tracker();
 }
+
+
+function dashboard_dashboard_block_init() {
+	register_block_type( __DIR__ . '/build/blocks/dashboard' );
+	register_block_type( __DIR__ . '/build/blocks/form' );
+}
+
+add_action( 'init', 'dashboard_dashboard_block_init' );
