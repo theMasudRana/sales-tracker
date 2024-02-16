@@ -1,5 +1,5 @@
 import { useState } from '@wordpress/element';
-import { Button, Form, Input, Select, notification } from 'antd';
+import { Button, Form, Input, Select, notification, Row, Col } from 'antd';
 import SalesDashboard from './SalesDashboard';
 const { Option } = Select;
 import { st_sales } from '../endpoints/endpoints';
@@ -17,14 +17,14 @@ function SalesForm({ itemID, editMode }) {
     const createItem = (values) => {
 
         // Disable multiple submission in a day
-        const cookie = document.cookie.split(';').find(c => c.trim().startsWith('sales-tracker-notification='));
-        if (cookie) {
-            const cookieValue = cookie.split('=')[1];
-            if (cookieValue === 'true') {
-                openNotification('topRight', 'error', 'You have already submitted a sales item today!');
-                return;
-            }
-        }
+        // const cookie = document.cookie.split(';').find(c => c.trim().startsWith('sales-tracker-notification='));
+        // if (cookie) {
+        //     const cookieValue = cookie.split('=')[1];
+        //     if (cookieValue === 'true') {
+        //         openNotification('topRight', 'error', 'You have already submitted a sales item today!');
+        //         return;
+        //     }
+        // }
 
         const { prefix, ...rest } = values;
         const newValue = {
@@ -63,7 +63,7 @@ function SalesForm({ itemID, editMode }) {
                     width: 100,
                 }}
             >
-                <Option value="880">+880</Option>
+                <Option value="880">880</Option>
             </Select>
         </Form.Item>
     );
@@ -137,10 +137,10 @@ function SalesForm({ itemID, editMode }) {
                         span: 24,
                     }}
                     wrapperCol={{
-                        span: 16,
+                        span: 24,
                     }}
                     style={{
-                        maxWidth: 800,
+                        maxWidth: 1320,
                     }}
                     initialValues={{
                         remember: true,
@@ -151,135 +151,161 @@ function SalesForm({ itemID, editMode }) {
                     autoComplete="off"
                     form={form}
                 >
-                    <Form.Item
-                        label="Buyer"
-                        name="buyer"
-                        rules={[
-                            {
-                                type: 'string',
-                                required: true,
-                                message: 'Please enter text, spaces, and numbers only, not more than 20 characters.',
-                                max: 20,
-                                pattern: new RegExp(/^[a-zA-Z0-9\s]{1,20}$/),
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Amount"
-                        name="amount"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter valid number!',
-                                pattern: new RegExp(/^[0-9]+$/),
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Receipt ID"
-                        name="receipt_id"
-                        rules={[
-                            {
-                                type: 'string',
-                                required: true,
-                                message: 'Please enter only text and spaces.',
-                                pattern: new RegExp(/^[a-zA-Z\s]*$/),
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Items"
-                        name="items"
-                        rules={[
-                            {
-                                type: 'string',
-                                required: true,
-                                message: 'Please enter only text and spaces.',
-                                pattern: new RegExp(/^[a-zA-Z\s]*$/),
-                            },
-                        ]}
-                    >
-                        <Input.TextArea />
-                    </Form.Item>
-                    <Form.Item
-                        label="Buyer Email"
-                        name="buyer_email"
-                        rules={[
-                            {
-                                type: 'string',
-                                required: true,
-                                message: 'Please enter valid email!',
-                                pattern: new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="phone"
-                        label="Buyer Phone Number"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your phone number!',
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={8}>
+                            <Form.Item
+                                label="Buyer"
+                                name="buyer"
+                                rows={4}
+                                rules={[
+                                    {
+                                        type: 'string',
+                                        required: true,
+                                        message: 'Please enter text, spaces, and numbers only, not more than 20 characters.',
+                                        max: 20,
+                                        pattern: new RegExp(/^[a-zA-Z0-9\s]{1,20}$/),
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={8}>
+                            <Form.Item
+                                rows={4}
+                                label="Amount"
+                                name="amount"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter valid number!',
+                                        pattern: new RegExp(/^[0-9]+$/),
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={8}>
+                            <Form.Item
+                                label="Receipt ID"
+                                name="receipt_id"
+                                rules={[
+                                    {
+                                        type: 'string',
+                                        required: true,
+                                        message: 'Please enter only text and spaces.',
+                                        pattern: new RegExp(/^[a-zA-Z\s]*$/),
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={24} md={12} lg={6}>
+                            <Form.Item
+                                label="Buyer Email"
+                                name="buyer_email"
+                                rules={[
+                                    {
+                                        type: 'string',
+                                        required: true,
+                                        message: 'Please enter valid email!',
+                                        pattern: new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={6}>
+                            <Form.Item
+                                name="phone"
+                                label="Buyer Phone Number"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your phone number!',
 
-                            },
-                        ]}
-                    >
-                        <Input
-                            addonBefore={prefixSelector}
-                            style={{
-                                width: '100%',
-                            }}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        label="Note"
-                        name="note"
-                        rules={[
-                            {
-                                type: 'string',
-                                required: true,
-                                message: 'Please enter not more than 30 words.',
-                                pattern: new RegExp(/^[\s\S]{0,30}$/),
-                            },
-                        ]}
-                    >
-                        <Input.TextArea />
-                    </Form.Item>
-                    <Form.Item
-                        label="City"
-                        name="city"
-                        rules={[
-                            {
-                                type: 'string',
-                                required: true,
-                                message: 'Please enter only text and spaces.',
-                                pattern: new RegExp(/^[a-zA-Z\s]*$/),
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Entry By"
-                        name="entry_by"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter only numbers.',
-                                pattern: new RegExp(/^\d+$/),
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    addonBefore={prefixSelector}
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={6}>
+                            <Form.Item
+                                label="City"
+                                name="city"
+                                rules={[
+                                    {
+                                        type: 'string',
+                                        required: true,
+                                        message: 'Please enter only text and spaces.',
+                                        pattern: new RegExp(/^[a-zA-Z\s]*$/),
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={6}>
+                            <Form.Item
+                                label="Entry By"
+                                name="entry_by"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter only numbers.',
+                                        pattern: new RegExp(/^\d+$/),
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={12}>
+                            <Form.Item
+                                label="Items"
+                                name="items"
+                                rules={[
+                                    {
+                                        type: 'string',
+                                        required: true,
+                                        message: 'Please enter only text and spaces.',
+                                        pattern: new RegExp(/^[a-zA-Z\s]*$/),
+                                    },
+                                ]}
+                            >
+                                <Input.TextArea />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={12}>
+                            <Form.Item
+                                label="Note"
+                                name="note"
+                                rules={[
+                                    {
+                                        type: 'string',
+                                        required: true,
+                                        message: 'Please enter not more than 30 words.',
+                                        pattern: new RegExp(/^[\s\S]{0,30}$/),
+                                    },
+                                ]}
+                            >
+                                <Input.TextArea />
+                            </Form.Item>
+                        </Col>
+                    </Row>
                     <Form.Item
                         wrapperCol={{
                             span: 12,
