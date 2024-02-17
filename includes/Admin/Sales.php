@@ -10,7 +10,7 @@ class Sales {
 	/**
 	 * Sales tracker page routing
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public function sales_tracker_page() {
 		$action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';

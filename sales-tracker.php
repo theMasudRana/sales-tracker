@@ -121,10 +121,17 @@ if ( ! function_exists( 'sales_tracker' ) ) {
 	sales_tracker();
 }
 
+if ( ! function_exists( 'sales_tracker_block_init' ) ) {
 
-function dashboard_dashboard_block_init() {
-	register_block_type( __DIR__ . '/build/blocks/dashboard' );
-	register_block_type( __DIR__ . '/build/blocks/form' );
+	/**
+	 * Register sales tracker blocks
+	 *
+	 * @return void
+	 */
+	function sales_tracker_block_init() {
+		register_block_type( __DIR__ . '/build/blocks/dashboard' );
+		register_block_type( __DIR__ . '/build/blocks/form' );
+	}
+
+	add_action( 'init', 'sales_tracker_block_init' );
 }
-
-add_action( 'init', 'dashboard_dashboard_block_init' );

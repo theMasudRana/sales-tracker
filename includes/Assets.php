@@ -3,14 +3,16 @@
 namespace Sales\Tracker;
 
 /**
- * Assets loader
+ * The Assets class
+ *
+ * @since 1.0.0
  */
 class Assets {
 
 	/**
 	 * Load the scripts and styles in respective hook.
 	 */
-	function __construct() {
+	public function __construct() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_assets' ) );
 	}

@@ -8,13 +8,15 @@ if ( ! class_exists( 'WP_List_table' ) ) {
 
 /**
  * Display Track List
+ *
+ * @since 1.0.0
  */
 class Sales_List extends \WP_List_Table {
 
 	/**
 	 * Call parent construct for args
 	 */
-	function __construct() {
+	public function __construct() {
 		parent::__construct(
 			array(
 				'singular' => 'sale',
@@ -29,7 +31,7 @@ class Sales_List extends \WP_List_Table {
 	 *
 	 * @return void
 	 */
-	function no_items() {
+	public function no_items() {
 		esc_html_e( 'No sales data found', 'sales-tracker' );
 	}
 
@@ -55,7 +57,7 @@ class Sales_List extends \WP_List_Table {
 	 *
 	 * @return array
 	 */
-	function get_sortable_columns() {
+	public function get_sortable_columns() {
 		$sortable_columns = array(
 			'amount'   => array( 'amount', true ),
 			'entry_at' => array( 'entry_at', true ),
@@ -69,7 +71,7 @@ class Sales_List extends \WP_List_Table {
 	 *
 	 * @return array
 	 */
-	function get_bulk_actions() {
+	public function get_bulk_actions() {
 		$actions = array(
 			'delete' => esc_html__( 'Move to Trash', 'sales-tracker' ),
 		);

@@ -3,17 +3,23 @@
 namespace Sales\Tracker\Admin;
 
 /**
- * Menu handler class
+ * The Menu class
+ *
+ * @since 1.0.0
  */
-
 class Menu {
 
+	/**
+	 * The tracker object
+	 *
+	 * @var object $tracker The tracker object
+	 */
 	public $tracker;
 
 	/**
 	 * Initialize the menu class
 	 */
-	function __construct( $tracker ) {
+	public function __construct( $tracker ) {
 		$this->tracker = $tracker;
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 	}
