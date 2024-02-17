@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "title": "Sales Tracker Dashboard",
   "category": "widgets",
-  "icon": "smiley",
+  "icon": "performance",
   "description": "Displays the dashboard",
   "example": {},
   "supports": {

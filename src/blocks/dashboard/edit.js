@@ -32,7 +32,7 @@ import './editor.scss';
 export default function Edit() {
 	return (
 		<p {...useBlockProps()}>
-			{__('Sales Tracker Dashboard', 'dashboard')}
+			{__('Sales Tracker Dashboard Rendered in the Frontend', 'dashboard')}
 		</p>
 	);
 }

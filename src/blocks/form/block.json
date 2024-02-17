@@ -3,9 +3,9 @@
 	"apiVersion": 3,
 	"name": "sales-tracker/form",
 	"version": "1.0.0",
-	"title": "Sales Tracker form",
+	"title": "Sales Tracker Form",
 	"category": "widgets",
-	"icon": "smiley",
+	"icon": "welcome-widgets-menus",
 	"description": "Displays the form",
 	"example": {},
 	"supports": {

@@ -317,7 +317,7 @@ function SalesForm({ itemID, editMode }) {
                     </Form.Item>
                 </Form>
                 {
-                    editMode && <Button type="secondary" onClick={backButton}>Go back</Button>
+                    editMode && <Button type="secondary" onClick={backButton}>Back to Dashboard</Button>
                 }
             </div>
     )
