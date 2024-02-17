@@ -10,16 +10,17 @@ Follow these steps to install Sales Tracker on your WordPress website:
 
 1. **Download the Plugin:**
 
-   -  Download the Sales Tracker plugin from the [GitHub repository](https://github.com/theMasudRana/sales-tracker).
-   -  The plugin file you need is `sales-tracker.zip`.
+   -  Download the Sales Tracker plugin from the [GitHub repository](https://github.com/theMasudRana/sales-tracker/archive/refs/tags/v1.0.0.zip).
+   -  The plugin file you need is `sales-tracker-1.0.0.zip`.
 
 2. **Upload to WordPress:**
 
    -  Log in to your WordPress admin dashboard.
    -  Navigate to **Plugins > Add New**.
    -  Click on the **Upload Plugin** button.
-   -  Choose the `sales-tracker.zip` file you downloaded.
+   -  Choose the `sales-tracker-1.0.0.zip` file you downloaded.
    -  Click **Install Now** and then **Activate Plugin**.
+   -  **Set WordPress Permalink Settings to Post name**
 
 3. **Manual Installation:**
    -  If you prefer manual installation, unzip the plugin folder.
@@ -40,12 +41,16 @@ To ensure that Sales Tracker is working correctly, perform the following tests:
 
 1. **Basic Functionality:**
 
-   -  Create a few test sales and verify that the plugin accurately tracks sales data.
-   -  Check if the sales reports are displayed correctly.
+   -  Create a page for Sales Tracker Dashboard with this shortcode [sales_tracker_dashboard]
+   -  Create a page for Sales Tracker Form with this shortcode [sales_tracker_form]
+   -  Create some sales using the form and check if they are showing in the sales tracker dashboard properly or not.
+   -  (Note: I have disabled this requirements [Using cookie, prevent users from multiple submissions within 24 hours.
+      ] code so that the plugin can be tested wit multiple data entry.)
 
 2. **Compatibility:**
 
    -  Test Sales Tracker with different themes but make sure the set the page container width to min or 1120px for great UX
+   -  Recommended Astra WordPress theme
 
 ## Reporting Issues
 
@@ -53,7 +58,7 @@ If you encounter any issues or have suggestions for improvement, please report t
 
 ## Support and Documentation
 
-For additional help or documentation, please contact with me at mr.masudrana00@gmail.com.
+For additional help or documentation, please contact with me at mr.masudrana00@gmail.com or Skype: mr.masudrana00
 
 ## License
 
