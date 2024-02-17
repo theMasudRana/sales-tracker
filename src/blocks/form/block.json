@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sales-tracker/form",
+	"version": "1.0.0",
+	"title": "Sales Tracker Form",
+	"category": "widgets",
+	"icon": "welcome-widgets-menus",
+	"description": "Displays the form",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "sales-tracker",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}

@@ -3,7 +3,7 @@
 /**
  * Insert track item in to the database
  *
- * @param array $args
+ * @param array $args Array of arguments for creating a new track.
  *
  * @return int|WP_Error
  */

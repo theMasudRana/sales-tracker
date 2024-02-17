@@ -6,7 +6,7 @@
 			<p><?php esc_html_e( 'Sale item has been inserted successfully!', 'sales-tracker' ); ?></p>
 		</div>
 	<?php endif; ?>
-	<?php if ( isset( $_GET['sale-deleted'] ) && $_GET['sale-deleted'] == 'true' ) : ?>
+	<?php if ( isset( $_GET['sale-deleted'] ) && 'true' === $_GET['sale-deleted'] ) : ?>
 		<div class="notice notice-success">
 			<p><?php esc_html_e( 'Sale item has been deleted successfully!', 'sales-tracker' ); ?></p>
 		</div>

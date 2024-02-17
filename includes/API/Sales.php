@@ -8,13 +8,15 @@ use WP_REST_Server;
 
 /**
  * Sales API
+ *
+ * @since 1.0.0
  */
 class Sales extends WP_REST_Controller {
 
 	/**
 	 * Initialize the class
 	 */
-	function __construct() {
+	public function __construct() {
 		$this->namespace = 'sales-tracker/v1';
 		$this->rest_base = 'sales';
 	}
@@ -365,39 +367,39 @@ class Sales extends WP_REST_Controller {
 	protected function prepare_item_for_database( $request ) {
 		$prepared = array();
 
-		if ( isset( $request['amount'] ) ) {
+		if ( isset( $request['amount'] ) && is_numeric( $request['amount'] ) ) {
 			$prepared['amount'] = $request['amount'];
 		}
 
-		if ( isset( $request['buyer'] ) ) {
+		if ( isset( $request['buyer'] ) && preg_match( '/^[a-zA-Z0-9 ]{1,20}$/', $request['buyer'] ) ) {
 			$prepared['buyer'] = $request['buyer'];
 		}
 
-		if ( isset( $request['receipt_id'] ) ) {
+		if ( isset( $request['receipt_id'] ) && is_string( $request['receipt_id'] ) ) {
 			$prepared['receipt_id'] = $request['receipt_id'];
 		}
 
-		if ( isset( $request['items'] ) ) {
+		if ( isset( $request['items'] ) && is_string( $request['items'] ) ) {
 			$prepared['items'] = $request['items'];
 		}
 
-		if ( isset( $request['buyer_email'] ) ) {
+		if ( isset( $request['buyer_email'] ) && filter_var( $request['buyer_email'], FILTER_VALIDATE_EMAIL ) ) {
 			$prepared['buyer_email'] = $request['buyer_email'];
 		}
 
-		if ( isset( $request['note'] ) ) {
+		if ( isset( $request['note'] ) && mb_strlen( $request['note'] ) <= 30 ) {
 			$prepared['note'] = $request['note'];
 		}
 
-		if ( isset( $request['city'] ) ) {
+		if ( isset( $request['city'] ) && preg_match( '/^[a-zA-Z ]+$/', $request['city'] ) ) {
 			$prepared['city'] = $request['city'];
 		}
 
-		if ( isset( $request['phone'] ) ) {
+		if ( isset( $request['phone'] ) && is_numeric( $request['phone'] ) ) {
 			$prepared['phone'] = $request['phone'];
 		}
 
-		if ( isset( $request['entry_by'] ) ) {
+		if ( isset( $request['entry_by'] ) && is_numeric( $request['entry_by'] ) ) {
 			$prepared['entry_by'] = $request['entry_by'];
 		}
 

@@ -4,18 +4,20 @@ namespace Sales\Tracker\Frontend;
 
 /**
  * Sales Form shortcode
+ *
+ * @since 1.0.0
  */
 class Sales_Dashboard {
 
 	/**
 	 * Initialize the class
 	 */
-	function __construct() {
+	public function __construct() {
 		add_shortcode( 'sales_tracker_dashboard', array( $this, 'render_shortcode' ) );
 	}
 
 	/**
-	 * Render the [sales_tracker_form] shortcode
+	 * Render the [sales_tracker_dashboard] shortcode
 	 *
 	 * @param array  $atts
 	 * @param string $content

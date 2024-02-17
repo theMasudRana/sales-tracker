@@ -3,14 +3,16 @@
 namespace Sales\Tracker;
 
 /**
- * Assets loader
+ * The Assets class
+ *
+ * @since 1.0.0
  */
 class Assets {
 
 	/**
 	 * Load the scripts and styles in respective hook.
 	 */
-	function __construct() {
+	public function __construct() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_assets' ) );
 	}
@@ -23,7 +25,7 @@ class Assets {
 	public function get_frontend_scripts() {
 		return array(
 			'sales-tracker-frontend-script' => array(
-				'src'     => SALES_TRACKER_BUILD . '/index.js',
+				'src'     => SALES_TRACKER_ASSETS . '/js/application/index.js',
 				'version' => SALES_TRACKER_VERSION,
 				'deps'    => array( 'wp-element' ),
 			),
@@ -38,7 +40,7 @@ class Assets {
 	public function get_frontend_styles() {
 		return array(
 			'sales-tracker-frontend-style' => array(
-				'src'     => SALES_TRACKER_BUILD . '/index.css',
+				'src'     => SALES_TRACKER_ASSETS . '/js/application/index.css',
 				'version' => SALES_TRACKER_VERSION,
 				'deps'    => false,
 			),
